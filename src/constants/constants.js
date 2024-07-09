@@ -1,0 +1,83 @@
+import path from 'node:path';
+
+export const ENV_VARS = {
+  PORT: 'PORT',
+  MONGODB_USER: 'MONGODB_USER',
+  MONGODB_PASSWORD: 'MONGODB_PASSWORD',
+  MONGODB_URL: 'MONGODB_URL',
+  MONGODB_DB: 'MONGODB_DB',
+  APP_DOMAIN: 'APP_DOMAIN',
+};
+
+export const DIR = {
+  TEMP: path.join(process.cwd(), 'temp'),
+  UPLOAD: path.join(process.cwd(), 'uploads'),
+};
+
+export const SORT_ORDER = {
+  ASC: 'asc',
+  DESC: 'desc',
+};
+
+export const CONTACT = {
+  ID: '_id',
+  NAME: 'name',
+  PHONE_NUMBER: 'phoneNumber',
+  EMAIL: 'email',
+  IS_FAVORITE: 'isFavourite',
+  CONTACT_TYPE: 'contactType',
+  CREATED_AT: 'createdAt',
+  UPDATED_AT: 'updatedAt',
+};
+
+export const CONTACT_TYPE = {
+  HOME: 'home',
+  PERSONAL: 'personal',
+};
+
+export const TIME_DURATION = {
+  FIFTEEN_MIN: 15 * 60 * 1000,
+  THIRTY_DAYS: 30 * 24 * 60 * 60 * 1000,
+};
+
+export const COOKIE = {
+  REFRESH_TOKEN: 'refreshToken',
+  SESSION_ID: 'sessionId',
+  EXPIRES: new Date(Date.now() + TIME_DURATION.THIRTY_DAYS),
+};
+
+export const AUTHENTICATE = {
+  AUTHORIZATION: 'Authorization',
+  BEARER: 'Bearer',
+};
+
+export const SMTP = {
+  HOST: 'SMTP_HOST',
+  PORT: 'SMTP_PORT',
+  USER: 'SMTP_USER',
+  PASSWORD: 'SMTP_PASSWORD',
+  FROM: 'SMTP_FROM',
+};
+
+export const JWT = {
+  SECRET: 'JWT_SECRET',
+};
+
+export const CLOUDINARY = {
+  URL: 'CLOUDINARY_URL',
+  API_KEY: 'CLOUDINARY_API_KEY',
+  API_SECRET: 'CLOUDINARY_API_SECRET',
+  NAME: 'CLOUDINARY_NAME',
+  ENABLE_CLOUDINARY: 'ENABLE_CLOUDINARY',
+};
+
+export const SWAGGER = {
+  PATH: path.join(process.cwd(), 'docs', 'swagger.json'),
+};
+
+export const GOOGLE_OAUTH = {
+  CLIENT_ID: 'GOOGLE_OAUTH_CLIENT_ID',
+  CLIENT_SECRET: 'GOOGLE_OAUTH_CLIENT_SECRET',
+  PATH_JSON: path.join(process.cwd(), 'google-oauth.json'),
+  REDIRECT_URIS: 'http://localhost:3000/confirm-google-redirect',
+};

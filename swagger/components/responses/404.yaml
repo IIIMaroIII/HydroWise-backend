@@ -1,0 +1,15 @@
+description: The contact with this id was not found!
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: 'The contact with id 65ca67e7ae7f10c88b598384 was not found!'

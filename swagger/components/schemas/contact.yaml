@@ -1,0 +1,46 @@
+type: object
+required:
+  - name
+  - phoneNumber
+properties:
+  _id:
+    description: 'Contact`s id'
+    type: string
+    example: 66738712d7702921c0987282
+  name:
+    description: 'Contact`s name'
+    type: string
+    example: 'Ivan Durak'
+  userId:
+    description: 'UserId will be automatically attached to the database, since you`ve logged in'
+    type: string
+    example: 666f9fbc6c7a6b62825a3c68
+  phoneNumber:
+    description: 'Contact`s phone number'
+    type: string
+    example: '380999999'
+  email:
+    description: 'Contact`s email'
+    type: string
+    example: 'ivan_durak@example.com'
+  isFavorite:
+    description: 'Is contact favorite'
+    type: boolean
+    example: true
+  contactType:
+    description: 'Contact`s type'
+    type: string
+    enum: ['home', 'personal']
+    example: 'work'
+  photo:
+    description: 'Contact`s photograph link'
+    type: string
+    example: 'http://localhost:3000/auth/uploads/1719196919385_26702.jpg'
+  createdAt:
+    description: 'Contact`s created data'
+    type: string
+    example: '2024-06-21T03:02:44.125+00:00'
+  updatedAt:
+    description: 'Contact`s updated data'
+    type: string
+    example: '2024-06-24T02:41:59.399+00:00'

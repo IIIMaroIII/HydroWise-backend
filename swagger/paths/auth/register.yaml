@@ -1,0 +1,58 @@
+tags:
+  - Auth
+summary: Register a new user
+operationId: registerUser
+description: 'Register a new user'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - name
+          - email
+          - password
+        properties:
+          name:
+            type: string
+            description: 'User`s name'
+            example: 'Ivan Durak'
+          email:
+            type: string
+            description: 'User`s email. Valid email addresses: john.doe@example.com, john-doe@example.com, john@example.co.uk,john.doe@example.co.in'
+            uniqueItems: true
+            example: 'john.doe@example.com'
+          password:
+            type: string
+            description: 'User`s password. Must be at least 3 symbols'
+            example: '111'
+responses:
+  '201':
+    description: 'Successfully registered a user!'
+    headers:
+      Set-Cookies:
+        description: 'Cookies with the new access and refresh tokens'
+        schema:
+          type: string
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: 'Successfully registered a user!'
+            data:
+              type: object
+              $ref: ../../components/schemas/user.yaml
+  '400':
+    $ref: ../../components/responses/400.yaml

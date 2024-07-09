@@ -1,0 +1,64 @@
+tags:
+  - Auth
+summary: Endpoint to reset password
+operationId: resetPwd
+security:
+  - bearerAuth: []
+description: 'Endpoint to send the new password along the access token from the request email link'
+parameters:
+  - in: cookie
+    name: refreshToken
+    required: true
+    schema:
+      type: string
+    description: The refresh token
+  - in: cookie
+    name: sessionId
+    required: true
+    schema:
+      type: string
+    description: The session id
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - token
+          - password
+        properties:
+          token:
+            type: string
+            description: 'Received the token by the request reset password email'
+            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2Njc2NDgxMTA4N2EzMTQwYmUxODQ5MDkiLCJlbWFpbCI6Im1hdHZlZXYuci52QGljbG91ZC5jb20iLCJpYXQiOjE3MTkxODI1MjcsImV4cCI6MTcxOTE4MjgyN30.dH54pdpFObUD1J29Q6SppUM0h5Oq-rz5XymE3dnNuTI'
+          password:
+            type: string
+            description: 'New user`s password. At least 3 symbols'
+            example: '222'
+responses:
+  '200':
+    description: 'The password has been successfully reset!'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'The password has been successfully reset!'
+            data:
+              type: object
+              example: {}
+  '400':
+    $ref: ../../components/responses/400.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml
