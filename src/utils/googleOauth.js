@@ -3,10 +3,6 @@ import { OAuth2Client } from 'google-auth-library';
 import { env } from './env.js';
 import { HttpError } from './HttpError.js';
 
-// const pathJson = path.join(process.cwd(), 'google-oauth.json');
-
-// const googleConfig = JSON.parse(await readFile(pathJson));
-
 const googleOauthClient = new OAuth2Client({
   clientId: env(GOOGLE_OAUTH.CLIENT_ID),
   clientSecret: env(GOOGLE_OAUTH.CLIENT_SECRET),

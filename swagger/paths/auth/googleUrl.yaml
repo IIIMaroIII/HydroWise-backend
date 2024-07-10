@@ -1,0 +1,33 @@
+tags:
+  - Auth
+summary: Endpoint to get the Google Authorization link
+operationId: getGoogleAuthUrl
+security:
+  - bearerAuth: []
+description: 'Endpoint for obtaining Google Authorization Link'
+responses:
+  '200':
+    description: 'Successfully got Google OAuth url!'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully got Google OAuth url!'
+            data:
+              type: string
+              description: Specifies that the response URL contains a redirect URI
+              example: 'https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&response_type=code&client_id=545839142526-0uv1q61kptfeqq7hu3d6rj2h47s9s8u8.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fconfirm-google-redirect'
+  '500':
+    $ref: ../../components/responses/500.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml

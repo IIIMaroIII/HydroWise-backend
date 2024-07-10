@@ -22,10 +22,17 @@ responses:
   '200':
     description: 'The session has been successfully refreshed!'
     headers:
-      Set-Cookies:
-        description: 'Cookies with the new access and refresh tokens'
+      Set-Cookie:
+        description: 'Set-Cookie header containing the refresh token and session id.'
         schema:
           type: string
+          examples:
+            [
+              refreshToken=csxJDjuF9zCcE%2Ft2TGcFiVQ7%2Fmas1l4MkMecEIvM; Path=/; Expires=Fri,
+              09 Aug 2024 03:13:57 GMT; HttpOnly,
+              sessionId=668dfc7512ec86d16817d911; Path=/; Expires=Fri,
+              09 Aug 2024 03:13:57 GMT; HttpOnly,
+            ]
     content:
       application/json:
         schema:

@@ -14,24 +14,30 @@ tags:
 servers:
   - url: https://waterwise-backend.onrender.com
 paths:
-  /auth/register:
+  /v1/auth/register:
     post:
       $ref: '../swagger/paths/auth/register.yaml'
-  /auth/login:
+  /v1/auth/login:
     post:
       $ref: '../swagger/paths/auth/login.yaml'
-  /auth/refresh:
+  /v1/auth/refresh:
     post:
       $ref: '../swagger/paths/auth/refresh.yaml'
-  /auth/logout:
+  /v1/auth/logout:
     post:
       $ref: '../swagger/paths/auth/logout.yaml'
-  /auth/request-reset-password:
+  /v1/auth/request-reset-password:
     post:
       $ref: '../swagger/paths/auth/requestResetPassword.yaml'
-  /auth/reset-pwd:
+  /v1/auth/reset-pwd:
     post:
       $ref: '../swagger/paths/auth/resetPwd.yaml'
+  /v1/auth/get-oauth-url:
+    post:
+      $ref: '../swagger/paths/auth/googleUrl.yaml'
+  /v1/auth/confirm-oauth:
+    post:
+      $ref: '../swagger/paths/auth/loginWithGoogle.yaml'
 components:
   securitySchemes:
     bearerAuth:
