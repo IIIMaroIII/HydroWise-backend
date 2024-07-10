@@ -38,6 +38,20 @@ paths:
   /v1/auth/confirm-oauth:
     post:
       $ref: '../swagger/paths/auth/loginWithGoogle.yaml'
+  /v1/water:
+    post:
+      $ref: '../swagger/paths/water/post.yaml'
+  /v1/water/daily:
+    get:
+      $ref: '../swagger/paths/water/getDaily.yaml'
+  /v1/water/monthly:
+    get:
+      $ref: '../swagger/paths/water/getMonthly.yaml'
+  /v1/water/{id}:
+    patch:
+      $ref: '../swagger/paths/water/{id}/patch.yaml'
+    delete:
+      $ref: '../swagger/paths/water/{id}/delete.yaml'
 components:
   securitySchemes:
     bearerAuth:

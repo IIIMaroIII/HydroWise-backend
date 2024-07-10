@@ -1,0 +1,57 @@
+tags:
+  - Water
+summary: Add water record
+operationId: addWaterVolume
+description: 'Add water record with payload'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - volume
+          - date
+          - time
+          - userId
+        properties:
+          volume:
+            description: 'Volume of water'
+            type: number
+            example: 2
+          date:
+            description: 'Date of week'
+            type: string
+            example: 2024-07-03
+          time:
+            description: 'Time of day'
+            type: string
+            example: 07:00
+          userId:
+            description: "Water's user id"
+            type: string
+            example: 65e4decdd286b30065d54af9
+responses:
+  '201':
+    description: 'Creates a record of water volume'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully add a water volume!
+            data:
+              type: object
+              $ref: '../../components/schemas/water.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
