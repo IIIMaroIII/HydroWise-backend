@@ -25,7 +25,7 @@
     }
   ],
   "paths": {
-    "/auth/register": {
+    "/v1/auth/register": {
       "post": {
         "tags": [
           "Auth"
@@ -114,7 +114,7 @@
         }
       }
     },
-    "/auth/login": {
+    "/v1/auth/login": {
       "post": {
         "tags": [
           "Auth"
@@ -197,7 +197,7 @@
         }
       }
     },
-    "/auth/refresh": {
+    "/v1/auth/refresh": {
       "post": {
         "tags": [
           "Auth"
@@ -234,10 +234,16 @@
           "200": {
             "description": "The session has been successfully refreshed!",
             "headers": {
-              "Set-Cookies": {
-                "description": "Cookies with the new access and refresh tokens",
+              "Set-Cookie": {
+                "description": "Set-Cookie header containing the refresh token and session id.",
                 "schema": {
-                  "type": "string"
+                  "type": "string",
+                  "examples": [
+                    "refreshToken=csxJDjuF9zCcE%2Ft2TGcFiVQ7%2Fmas1l4MkMecEIvM; Path=/; Expires=Fri",
+                    "09 Aug 2024 03:13:57 GMT; HttpOnly",
+                    "sessionId=668dfc7512ec86d16817d911; Path=/; Expires=Fri",
+                    "09 Aug 2024 03:13:57 GMT; HttpOnly"
+                  ]
                 }
               }
             },
@@ -286,7 +292,7 @@
         }
       }
     },
-    "/auth/logout": {
+    "/v1/auth/logout": {
       "post": {
         "tags": [
           "Auth"
@@ -332,7 +338,7 @@
         }
       }
     },
-    "/auth/request-reset-password": {
+    "/v1/auth/request-reset-password": {
       "post": {
         "tags": [
           "Auth"
@@ -431,7 +437,7 @@
         }
       }
     },
-    "/auth/reset-pwd": {
+    "/v1/auth/reset-pwd": {
       "post": {
         "tags": [
           "Auth"
@@ -521,6 +527,156 @@
           },
           "400": {
             "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/v1/auth/get-oauth-url": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Endpoint to get the Google Authorization link",
+        "operationId": "getGoogleAuthUrl",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "Endpoint for obtaining Google Authorization Link",
+        "responses": {
+          "200": {
+            "description": "Successfully got Google OAuth url!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully got Google OAuth url!"
+                    },
+                    "data": {
+                      "type": "string",
+                      "description": "Specifies that the response URL contains a redirect URI",
+                      "example": "https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&response_type=code&client_id=545839142526-0uv1q61kptfeqq7hu3d6rj2h47s9s8u8.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fconfirm-google-redirect"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/v1/auth/confirm-oauth": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Endpoint point for login with Google",
+        "operationId": "loginWithGoogle",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "Login with Google or register a new account if database haven`t gotten the user with this email",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "Query parameter 'code' in the URL from the Google Authorization link Endpoint",
+                    "examples": [
+                      "4%2F0ATx3LY7TtK3CmOsa-ahxK4-MND11sFClmqvK5wUmTkN0JPOq4fDWBykbYQCBYg6HAsjfDg",
+                      "http://localhost:3000/confirm-google-redirect?code=4%2F0ATx3LY6I99VEyeYczGnJPwYQYx_o3l9RIiEZ3siYwrvlZH7-D8ChfWvt69KRNWnR-_mIBg&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&authuser=0&prompt=none"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "\"Successfully logged in via Google OAuth!",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Set-Cookie header containing the refresh token and session id.",
+                "schema": {
+                  "type": "string",
+                  "examples": [
+                    "refreshToken=csxJDjuF9zCcE%2Ft2TGcFiVQ7%2Fmas1l4MkMecEIvM; Path=/; Expires=Fri",
+                    "09 Aug 2024 03:13:57 GMT; HttpOnly",
+                    "sessionId=668dfc7512ec86d16817d911; Path=/; Expires=Fri",
+                    "09 Aug 2024 03:13:57 GMT; HttpOnly"
+                  ]
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "\"Successfully logged in via Google OAuth!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "accessToken"
+                      ],
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "description": "The access token after successful a login",
+                          "example": "L6KR83+EGP1rPGLE1piICQrgugZJz4CA1rHZMIKd"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/401"
