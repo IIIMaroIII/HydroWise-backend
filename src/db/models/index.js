@@ -1,9 +1,9 @@
-import { ContactModel } from './contactModel.js';
 import { SessionModel } from './sessionModel.js';
 import { UserModel } from './userModel.js';
+import { waterModel } from './waterModel.js';
 
 export const Models = {
-  ContactModel,
   UserModel,
   SessionModel,
+  waterModel,
 };

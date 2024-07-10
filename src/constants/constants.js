@@ -1,5 +1,8 @@
 import path from 'node:path';
 
+export const SERVER_DOMAIN = 'http://localhost:3000';
+export const CLIENT_DOMAIN = 'http://localhost:3000';
+
 export const ENV_VARS = {
   PORT: 'PORT',
   MONGODB_USER: 'MONGODB_USER',
@@ -17,22 +20,6 @@ export const DIR = {
 export const SORT_ORDER = {
   ASC: 'asc',
   DESC: 'desc',
-};
-
-export const CONTACT = {
-  ID: '_id',
-  NAME: 'name',
-  PHONE_NUMBER: 'phoneNumber',
-  EMAIL: 'email',
-  IS_FAVORITE: 'isFavourite',
-  CONTACT_TYPE: 'contactType',
-  CREATED_AT: 'createdAt',
-  UPDATED_AT: 'updatedAt',
-};
-
-export const CONTACT_TYPE = {
-  HOME: 'home',
-  PERSONAL: 'personal',
 };
 
 export const TIME_DURATION = {
@@ -79,5 +66,5 @@ export const GOOGLE_OAUTH = {
   CLIENT_ID: 'GOOGLE_OAUTH_CLIENT_ID',
   CLIENT_SECRET: 'GOOGLE_OAUTH_CLIENT_SECRET',
   PATH_JSON: path.join(process.cwd(), 'google-oauth.json'),
-  REDIRECT_URIS: 'http://localhost:3000/confirm-google-redirect',
+  REDIRECT_URIS: `${CLIENT_DOMAIN}/confirm-google-redirect`,
 };

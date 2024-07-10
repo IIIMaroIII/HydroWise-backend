@@ -8,7 +8,7 @@ export const initMongoConnection = async () => {
     MONGODB_PASSWORD,
   )}@${env(MONGODB_URL)}/${env(
     MONGODB_DB,
-  )}?retryWrites=true&w=majority&appName=Cluster0`;
+  )}?retryWrites=true&w=majority&appName=Cluster1`;
   try {
     await mongoose.connect(connectionLink);
     console.log('Mongo connection successfully established!');

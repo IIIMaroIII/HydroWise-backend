@@ -1,14 +1,14 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: Contacts app
+  title: WaterWise App
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description: This is a documentation of contacts app
+  description: This is a documentation of WaterWise App
 tags:
-  - name: Contacts
-    description: Operations with contacts.
+  - name: Water
+    description: Operations with water consumption.
   - name: Auth
     description: Auth operations.
 servers:
@@ -33,18 +33,6 @@ paths:
   /auth/reset-pwd:
     post:
       $ref: '../swagger/paths/auth/resetPwd.yaml'
-  /contacts:
-    get:
-      $ref: ../swagger/paths/contacts/get.yaml
-    post:
-      $ref: ../swagger/paths/contacts/post.yaml
-  /contacts/{contactId}:
-    delete:
-      $ref: '../swagger/paths/contacts/{contactId}/delete.yaml'
-    patch:
-      $ref: '../swagger/paths/contacts/{contactId}/patch.yaml'
-    get:
-      $ref: ../swagger/paths/contacts/{contactId}/get.yaml
 components:
   securitySchemes:
     bearerAuth:
