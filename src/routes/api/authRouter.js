@@ -3,6 +3,7 @@ import { JoiSchemas } from '../../validation/index.js';
 import { validateBody } from '../../middlewares/validateBody.js';
 import { ctrlWrapper } from '../../utils/ctrlWrapper.js';
 import { Controllers } from '../../controllers/index.js';
+import { authenticate } from '../../middlewares/authenticate.js';
 
 export const authRouter = express.Router();
 
@@ -20,10 +21,15 @@ authRouter.post(
 
 authRouter.post(
   '/refresh',
+  authenticate,
   ctrlWrapper(Controllers.auth.authRefreshController),
 );
 
-authRouter.post('/logout', ctrlWrapper(Controllers.auth.authLogoutController));
+authRouter.post(
+  '/logout',
+  authenticate,
+  ctrlWrapper(Controllers.auth.authLogoutController),
+);
 
 authRouter.post(
   '/request-reset-password',

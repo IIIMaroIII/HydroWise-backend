@@ -12,8 +12,7 @@ tags:
   - name: Auth
     description: Auth operations.
 servers:
-  - url: https://api.contacts-backend.kesug.com
-  - url: https://nodejs-hw-mongodb-ebwt.onrender.com
+  - url: https://waterwise-backend.onrender.com
 paths:
   /auth/register:
     post:
