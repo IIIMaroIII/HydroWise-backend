@@ -538,7 +538,7 @@
       }
     },
     "/v1/auth/get-oauth-url": {
-      "post": {
+      "get": {
         "tags": [
           "Auth"
         ],

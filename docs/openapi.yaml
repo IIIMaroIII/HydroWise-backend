@@ -33,7 +33,7 @@ paths:
     post:
       $ref: '../swagger/paths/auth/resetPwd.yaml'
   /v1/auth/get-oauth-url:
-    post:
+    get:
       $ref: '../swagger/paths/auth/googleUrl.yaml'
   /v1/auth/confirm-oauth:
     post:
