@@ -1,8 +1,28 @@
 import { model, Schema } from 'mongoose';
 import { handleMongooseError } from '../../utils/handleMongooseError.js';
 
-const waterSchema = new Schema({});
+const waterSchema = new Schema({
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'users',
+    required: true
+  },
+  volume: {
+    type: Number,
+      required: true,
+      default: 2,
+  },
+  date: {
+    type: Date,
+    required: true
+  },
+  time: {
+    type: String,
+    required: true
+  }
+}, { timestamps: true, versionKey: false  });;
 
 waterSchema.post('save', handleMongooseError);
 
-export const waterModel = model('water', waterSchema);
+export const WaterModel = model('water', waterSchema);
+
