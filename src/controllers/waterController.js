@@ -6,7 +6,8 @@ import { HttpError } from '../utils/HttpError.js';
 
 
 const addWaterVolumeController = async (req, res) => {
-    const volumeRecord = await Services.water.addWaterVolume({ ...req.body, userId: req.user._id });
+    const date = new Date();
+    const volumeRecord = await Services.water.addWaterVolume({ ...req.body, userId: req.user._id, date });
     res.json(ResponseMaker(201, 'Successfully add a water volume!', volumeRecord));
 };
 
@@ -29,37 +30,34 @@ const deleteWaterVolumeController = async (req, res,next) => {
 };
 
 const getDailyWaterVolumeController = async (req, res) => {
-    const date = req.query.date;
-    const userId = req.user._id;
-    const volumeRecords = await Services.water.getDailyWaterVolume(userId, date);
-    const totalVolume = volumeRecords.reduce((total, record) => total + record.volume, 0);
-    res.json(ResponseMaker(200, 'Successfully get a daily water volume!', {date, totalVolume, entries: volumeRecords }));
+    let { date } = req.query;
+     if (!date) {
+    date = new Date();
+  } else {
+    date = new Date(date);
+    };
+    const startOfDay = new Date(date.setHours(0, 0, 0, 0));
+    const endOfDay = new Date(date.setHours(23, 59, 59, 999));
+    const volumeRecords = await Services.water.getDailyWaterVolume(req.user._id, { $gte: startOfDay, $lte: endOfDay } );
+    // const totalVolume = volumeRecords.reduce((total, record) => total + record.volume, 0);
+    res.json(ResponseMaker(200, 'Successfully get a daily water volume!', volumeRecords));
 };
 
 
 const getMonthlyWaterVolumeController = async (req, res)=>{
-    const { month, year } = req.query;
-    const userId = req.user._id;
-    const records = await Services.water.getMonthlyWaterVolume(userId, { month, year });
-    const dailyVolumes = records.reduce((acc, record) => {
-      const dateStr = record.date;
-      if (!acc[dateStr]) {
-        acc[dateStr] = 0;
-      }
-      acc[dateStr] += record.volume;
-      return acc;
-    }, {});
+    let { date } = req.query;
 
-    const dailyVolumeArray = Object.keys(dailyVolumes).map(date => ({
-      date,
-      volume: dailyVolumes[date]
-    }));
-    res.json( ResponseMaker(200, 'Successfully get a monthly water volume!', {
-        month,
-        year,
-        totalVolume: records.reduce((total, record) => total + record.volume, 0),
-        entries: dailyVolumeArray})
-    );
+    if (!date) {
+        date = new Date();
+    } else {
+        date = new Date(date);
+    }
+
+    const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0, 23, 59, 59, 999);
+    const volumeRecords = await Services.water.getMonthlyWaterVolume(req.user._id, { $gte: startOfMonth, $lte: endOfMonth });
+    res.json(ResponseMaker(200, 'Successfully get a monthly water volume!', volumeRecords));
+        
 };
 
 export const water = {

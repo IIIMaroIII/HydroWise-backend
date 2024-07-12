@@ -31,24 +31,9 @@ responses:
               type: string
               example: Successfully get a daily water volume!
             data:
-              type: object
-              required:
-                - date
-                - totalVolume
-                - entries
-              properties:
-                entries:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                     data:
-                      $ref: '../../components/schemas/water.yaml'
-                totalVolume:
-                  type: number
-                  example: 150
-                date:
-                  type: string
-                  example: 2024-07-03
+              type: array
+              items:
+                $ref: '../../components/schemas/water.yaml'
+
   '401':
     $ref: '../../components/responses/401.yaml'
