@@ -35,33 +35,9 @@ responses:
               type: string
               example: Successfully get a monthly water volume!
             data:
-              type: object
-              required:
-                - month
-                - year
-                - totalVolume
-                - entries
-              properties:
-                totalVolume:
-                  type: number
-                  example: 150
-                month:
-                  type: number
-                  example: 07
-                year:
-                  type: number
-                  example: 2024
-                entries:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      date:
-                        type: string
-                        example: Wed Jul 03 2024
-                      volume:
-                        type: number
-                        example: 50
+              type: array
+              items:
+                $ref: '../../components/schemas/water.yaml'
 
   '401':
     $ref: '../../components/responses/401.yaml'

@@ -5,7 +5,7 @@ const addWaterSchema = Joi.object({
   userId: Joi.string(),
   volume: Joi.number().positive().required(),
   date: Joi.date(),
-  time: Joi.string().required()
+  // time: Joi.string().required()
 });
 
 const editWaterSchema = Joi.object({

@@ -10,16 +10,16 @@ const waterSchema = new Schema({
   volume: {
     type: Number,
       required: true,
-      default: 2,
+      default: 50,
   },
   date: {
     type: Date,
     required: true
   },
-  time: {
-    type: String,
-    required: true
-  }
+  // time: {
+  //   type: String,
+  //   required: true
+  // }
 }, { timestamps: true, versionKey: false  });;
 
 waterSchema.post('save', handleMongooseError);

@@ -2,10 +2,11 @@
 import { Models } from '../db/models/index.js';
  
  
-const addWaterVolume = async ({userId,...payload }) => {
+const addWaterVolume = async ({userId,data,...payload }) => {
   const volumeRecord = await Models.WaterModel.create({
     ...payload,
     userId: userId,
+    data:data,
   });
   return volumeRecord;
 };
@@ -23,23 +24,20 @@ const deleteWaterVolume = async (userId, id) => {
   return volumeRecord;
 };
 
-const getDailyWaterVolume = async (userId, date) => {
-  const volumeRecords = await Models.WaterModel.find({date: date, userId });
+const getDailyWaterVolume = async (userId, dateRange) => {
+  const volumeRecords = await Models.WaterModel.find({
+        userId: userId,
+        date: dateRange
+    });
   return volumeRecords;
 };
 
-const getMonthlyWaterVolume = async (userId, { month, year }) => {
-    const startDate = new Date(year, month - 1, 1);
-    const endDate = new Date(year, month, 0);
-    const records = await Models.WaterModel.find({
-      userId,
-      date: {
-        $gte: startDate,
-        $lte: endDate
-      }
+const getMonthlyWaterVolume = async (userId, dateRange) => {
+    const volumeRecords = await Models.WaterModel.find({
+        userId: userId,
+        date: dateRange
     });
-    return records;
-    
+    return volumeRecords;
 };
 
 export const water = {

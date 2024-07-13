@@ -18,10 +18,6 @@ properties:
     description: 'Date of week'
     type: string
     example: 2024-07-03
-  time:
-    description: 'Time of day'
-    type: string
-    example: 07:00
   userId:
     description: "Water's user id"
     type: string

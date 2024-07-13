@@ -22,10 +22,10 @@ requestBody:
             description: 'Volume of water'
             type: number
             example: 50
-          time:
-            description: 'Time of day'
-            type: string
-            example: 07:00
+          # time:
+          #   description: 'Time of day'
+          #   type: string
+          #   example: 07:00
           userId:
             description: "Water's user id"
             type: string
