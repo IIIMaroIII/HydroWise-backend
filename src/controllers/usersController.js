@@ -19,6 +19,7 @@ const LoginController = async (req, res, next) => {
 
   res.json(
     ResponseMaker(200, 'You`ve been successfully logged in!', {
+      email: req.body.email,
       accessToken: session.accessToken,
     }),
   );
