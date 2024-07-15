@@ -1,7 +1,7 @@
-import { auth } from './authServices.js';
+import { users } from './usersServices.js';
 import { water } from './waterServices.js';
 
 export const Services = {
-  auth,
+  users,
   water,
 };

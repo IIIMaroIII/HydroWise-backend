@@ -15,6 +15,10 @@ const userSchema = new Schema(
       ],
     },
     password: { type: String, required: [true, 'Password is required!'] },
+    gender: {},
+    dailyNorma: {},
+    weight: {},
+    photoUrl: {},
   },
   { timestamps: true, versionKey: false },
 );
