@@ -5,14 +5,14 @@ import { HttpError } from '../utils/HttpError.js';
 import { googleOauth } from '../utils/googleOauth.js';
 import { ResponseMaker } from '../utils/responseMaker.js';
 
-const authRegisterController = async (req, res, next) => {
-  const user = await Services.auth.registerUser(req.body);
+const RegisterController = async (req, res, next) => {
+  const user = await Services.users.registerUser(req.body);
   if (!user) return next(HttpError(500, 'Internal Server Error'));
   res.json(ResponseMaker(201, 'Successfully registered a user!', user));
 };
 
-const authLoginController = async (req, res, next) => {
-  const session = await Services.auth.loginUser(req.body);
+const LoginController = async (req, res, next) => {
+  const session = await Services.users.loginUser(req.body);
   if (!session) return next(HttpError(500, 'Internal Server Error'));
 
   GenerateCookie(session, res);
@@ -24,9 +24,8 @@ const authLoginController = async (req, res, next) => {
   );
 };
 
-const authRefreshController = async (req, res, next) => {
-  console.log('req.cookies', req.cookies);
-  const session = await Services.auth.refreshUsersSession({
+const RefreshController = async (req, res, next) => {
+  const session = await Services.users.refreshUsersSession({
     sessionId: req.cookies.sessionId,
     refreshToken: req.cookies.refreshToken,
   });
@@ -41,7 +40,7 @@ const authRefreshController = async (req, res, next) => {
   );
 };
 
-const authLogoutController = async (req, res, next) => {
+const LogoutController = async (req, res, next) => {
   if (!req.cookies.sessionId || !req.cookies.refreshToken)
     throw next(
       HttpError(
@@ -49,7 +48,7 @@ const authLogoutController = async (req, res, next) => {
         'The session was not found, probably you`ve been logged out previously.',
       ),
     );
-  await Services.auth.logoutUser({
+  await Services.users.logoutUser({
     sessionId: req.cookies.sessionId,
     refreshToken: req.cookies.refreshToken,
   });
@@ -58,8 +57,8 @@ const authLogoutController = async (req, res, next) => {
   res.status(204).send();
 };
 
-const authRequestResetPasswordController = async (req, res) => {
-  await Services.auth.requestResetPassword(req.body.email);
+const RequestResetPasswordController = async (req, res) => {
+  await Services.users.requestResetPassword(req.body.email);
   res.json(
     ResponseMaker(
       200,
@@ -69,8 +68,8 @@ const authRequestResetPasswordController = async (req, res) => {
   );
 };
 
-const authResetPwdController = async (req, res) => {
-  await Services.auth.resetPwd(req.body);
+const ResetPwdController = async (req, res) => {
+  await Services.users.resetPwd(req.body);
   res.json(ResponseMaker(200, 'The password has been successfully reset!', {}));
 };
 
@@ -84,7 +83,7 @@ const getGoogleAuthUrlController = async (req, res) => {
 };
 
 const loginWithGoogleController = async (req, res) => {
-  const session = await Services.auth.loginOrSignupWithGoogle(req.body.code);
+  const session = await Services.users.loginOrSignupWithGoogle(req.body.code);
 
   GenerateCookie(session, res);
 
@@ -95,13 +94,13 @@ const loginWithGoogleController = async (req, res) => {
   );
 };
 
-export const auth = {
-  authRegisterController,
-  authLoginController,
-  authRefreshController,
-  authLogoutController,
-  authRequestResetPasswordController,
-  authResetPwdController,
+export const users = {
+  RegisterController,
+  LoginController,
+  RefreshController,
+  LogoutController,
+  RequestResetPasswordController,
+  ResetPwdController,
   getGoogleAuthUrlController,
   loginWithGoogleController,
 };

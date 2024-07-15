@@ -128,7 +128,7 @@ const loginOrSignupWithGoogle = async (code) => {
   return await Models.SessionModel.create(NewSession(user.id));
 };
 
-export const auth = {
+export const users = {
   registerUser,
   loginUser,
   refreshUsersSession,

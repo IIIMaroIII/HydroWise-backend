@@ -5,51 +5,51 @@ import { ctrlWrapper } from '../../utils/ctrlWrapper.js';
 import { Controllers } from '../../controllers/index.js';
 import { authenticate } from '../../middlewares/authenticate.js';
 
-export const authRouter = express.Router();
+export const usersRouter = express.Router();
 
-authRouter.post(
+usersRouter.post(
   '/register',
   validateBody(JoiSchemas.auth.registerUserSchema),
-  ctrlWrapper(Controllers.auth.authRegisterController),
+  ctrlWrapper(Controllers.users.RegisterController),
 );
 
-authRouter.post(
+usersRouter.post(
   '/login',
   validateBody(JoiSchemas.auth.loginUserSchema),
-  ctrlWrapper(Controllers.auth.authLoginController),
+  ctrlWrapper(Controllers.users.LoginController),
 );
 
-authRouter.post(
+usersRouter.post(
   '/refresh',
   authenticate,
-  ctrlWrapper(Controllers.auth.authRefreshController),
+  ctrlWrapper(Controllers.users.RefreshController),
 );
 
-authRouter.post(
+usersRouter.post(
   '/logout',
   authenticate,
-  ctrlWrapper(Controllers.auth.authLogoutController),
+  ctrlWrapper(Controllers.users.LogoutController),
 );
 
-authRouter.post(
+usersRouter.post(
   '/request-reset-password',
   validateBody(JoiSchemas.auth.requestResetPasswordSchema),
-  ctrlWrapper(Controllers.auth.authRequestResetPasswordController),
+  ctrlWrapper(Controllers.users.RequestResetPasswordController),
 );
 
-authRouter.post(
+usersRouter.post(
   '/reset-pwd',
   validateBody(JoiSchemas.auth.resetPwdSchema),
-  ctrlWrapper(Controllers.auth.authResetPwdController),
+  ctrlWrapper(Controllers.users.ResetPwdController),
 );
 
-authRouter.get(
+usersRouter.get(
   '/get-oauth-url',
-  ctrlWrapper(Controllers.auth.getGoogleAuthUrlController),
+  ctrlWrapper(Controllers.users.getGoogleAuthUrlController),
 );
 
-authRouter.post(
+usersRouter.post(
   '/confirm-oauth',
   validateBody(JoiSchemas.auth.loginWithGoogleAuthSchema),
-  ctrlWrapper(Controllers.auth.loginWithGoogleController),
+  ctrlWrapper(Controllers.users.loginWithGoogleController),
 );
