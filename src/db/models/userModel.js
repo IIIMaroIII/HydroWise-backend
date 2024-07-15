@@ -2,7 +2,6 @@ import { Schema, model } from 'mongoose';
 
 const userSchema = new Schema(
   {
-    name: { type: String, required: [true, 'Name is required!'] },
     email: {
       type: String,
       trim: true,
@@ -15,10 +14,12 @@ const userSchema = new Schema(
       ],
     },
     password: { type: String, required: [true, 'Password is required!'] },
-    gender: {},
-    dailyNorma: {},
-    weight: {},
-    photoUrl: {},
+    name: { type: String, default: null },
+    gender: { type: String, default: null },
+    dailyNorma: { type: Number, default: null },
+    weight: { type: String, default: null },
+    photoUrl: { type: String, default: null },
+    timeInSports: { type: Number, default: null },
   },
   { timestamps: true, versionKey: false },
 );
