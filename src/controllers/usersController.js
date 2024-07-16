@@ -1,4 +1,4 @@
-import { COOKIE } from '../constants/constants.js';
+import { CLIENT_DOMAIN, COOKIE } from '../constants/constants.js';
 import { Services } from '../services/index.js';
 import { GenerateCookie } from '../utils/GenerateCookie.js';
 import { HttpError } from '../utils/HttpError.js';
@@ -33,6 +33,9 @@ const RefreshController = async (req, res, next) => {
   if (!session) return next(HttpError(500, 'Internal Server Error'));
 
   GenerateCookie(session, res);
+
+  res.header('Access-Control-Allow-Origin', `${CLIENT_DOMAIN}`);
+  res.header('Access-Control-Allow-Credentials', 'true');
 
   res.json(
     ResponseMaker(200, 'The session has been successfully refreshed!', {
