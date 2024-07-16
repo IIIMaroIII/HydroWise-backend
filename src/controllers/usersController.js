@@ -1,4 +1,8 @@
-import { CLIENT_DOMAIN, COOKIE } from '../constants/constants.js';
+import {
+  CLIENT_DOMAIN,
+  COOKIE,
+  TIME_DURATION,
+} from '../constants/constants.js';
 import { Services } from '../services/index.js';
 import { GenerateCookie } from '../utils/GenerateCookie.js';
 import { HttpError } from '../utils/HttpError.js';
@@ -30,18 +34,33 @@ const LoginController = async (req, res, next) => {
 
 const RefreshController = async (req, res, next) => {
   const { sessionId, refreshToken } = req.cookies;
+  console.log('Cookies:', req.cookies);
 
   if (!sessionId || !refreshToken) {
     return res.status(401).json({ message: 'Missing session cookies' });
   }
 
   const session = await Services.users.refreshUsersSession({
-    sessionId,
-    refreshToken,
+    sessionId: req.cookies.sessionId,
+    refreshToken: req.cookies.refreshToken,
   });
   if (!session) return next(HttpError(500, 'Internal Server Error'));
 
-  GenerateCookie(session, res);
+  // GenerateCookie(session, res);
+
+  res.cookie(COOKIE.REFRESH_TOKEN, session.refreshToken, {
+    httpOnly: true,
+    secure: false, // Если вы тестируете на локальном хосте, установите false
+    sameSite: 'Lax',
+    expires: new Date(Date.now() + TIME_DURATION.THIRTY_DAYS),
+  });
+
+  res.cookie(COOKIE.SESSION_ID, session.id, {
+    httpOnly: true,
+    secure: false, // Если вы тестируете на локальном хосте, установите false
+    sameSite: 'Lax',
+    expires: new Date(Date.now() + TIME_DURATION.THIRTY_DAYS),
+  });
 
   res.header('Access-Control-Allow-Origin', `${CLIENT_DOMAIN}`);
   res.header('Access-Control-Allow-Credentials', 'true');
