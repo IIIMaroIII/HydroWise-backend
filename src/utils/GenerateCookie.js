@@ -29,7 +29,4 @@ export const GenerateCookie = (session, res) => {
     sameSite: 'Lax',
     expires: new Date(Date.now() + TIME_DURATION.THIRTY_DAYS),
   });
-
-  res.header('Access-Control-Allow-Origin', `${CLIENT_DOMAIN}`);
-  res.header('Access-Control-Allow-Credentials', 'true');
 };
