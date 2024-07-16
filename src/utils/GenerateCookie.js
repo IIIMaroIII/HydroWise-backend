@@ -18,13 +18,13 @@ import {
 export const GenerateCookie = (session, res) => {
   res.cookie(COOKIE.REFRESH_TOKEN, session.refreshToken, {
     httpOnly: true,
-    sameSite: 'Lax',
+    sameSite: 'None',
     expires: new Date(Date.now() + TIME_DURATION.THIRTY_DAYS),
   });
 
   res.cookie(COOKIE.SESSION_ID, session.id, {
     httpOnly: true,
-    sameSite: 'Lax',
+    sameSite: 'None',
     expires: new Date(Date.now() + TIME_DURATION.THIRTY_DAYS),
   });
 
