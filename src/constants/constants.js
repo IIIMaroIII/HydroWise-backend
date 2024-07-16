@@ -1,7 +1,7 @@
 import path from 'node:path';
 
 export const SERVER_DOMAIN = 'https://waterwise-backend.onrender.com';
-export const CLIENT_DOMAIN = 'http://localhost:3000';
+export const CLIENT_DOMAIN = 'http://localhost:5173';
 
 export const ENV_VARS = {
   PORT: 'PORT',

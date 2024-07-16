@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser';
 
 import { logger } from './utils/pino.js';
 import { env } from './utils/env.js';
-import { DIR, ENV_VARS } from './constants/constants.js';
+import { CLIENT_DOMAIN, DIR, ENV_VARS } from './constants/constants.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { router } from './routes/api/index.js';
@@ -14,7 +14,12 @@ export const setupServer = () => {
   const app = express();
 
   app.use(logger());
-  app.use(cors());
+  app.use(
+    cors({
+      origin: `${CLIENT_DOMAIN}`,
+      credentials: true,
+    }),
+  );
   app.use(cookieParser());
   app.use(express.json());
   app.use('/auth/uploads', express.static(DIR.UPLOAD));
