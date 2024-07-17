@@ -1,33 +1,17 @@
-import {
-  CLIENT_DOMAIN,
-  COOKIE,
-  TIME_DURATION,
-} from '../constants/constants.js';
+import { COOKIE, TIME_DURATION } from '../constants/constants.js';
 
-// export const GenerateCookie = (session, res) => {
-//   res.cookie(COOKIE.REFRESH_TOKEN, session.refreshToken, {
-//     httpOnly: true,
-//     expires: new Date(Date.now() + TIME_DURATION.THIRTY_DAYS),
-//   });
-
-//   res.cookie(COOKIE.SESSION_ID, session.id, {
-//     httpOnly: true,
-//     expires: new Date(Date.now() + TIME_DURATION.THIRTY_DAYS),
-//   });
-// };
 export const GenerateCookie = (session, res) => {
   res.cookie(COOKIE.REFRESH_TOKEN, session.refreshToken, {
     httpOnly: true,
     sameSite: 'None',
     expires: new Date(Date.now() + TIME_DURATION.THIRTY_DAYS),
+    secure: false,
   });
 
   res.cookie(COOKIE.SESSION_ID, session.id, {
     httpOnly: true,
     sameSite: 'None',
     expires: new Date(Date.now() + TIME_DURATION.THIRTY_DAYS),
+    secure: false,
   });
-
-  res.header('Access-Control-Allow-Origin', `${CLIENT_DOMAIN}`);
-  res.header('Access-Control-Allow-Credentials', 'true');
 };
