@@ -67,5 +67,5 @@ export const GOOGLE_OAUTH = {
   CLIENT_ID: 'GOOGLE_OAUTH_CLIENT_ID',
   CLIENT_SECRET: 'GOOGLE_OAUTH_CLIENT_SECRET',
   PATH_JSON: path.join(process.cwd(), 'google-oauth.json'),
-  REDIRECT_URIS: `${CLIENT_DOMAIN}/confirm-google-redirect`,
+  REDIRECT_URIS: `${DEPLOY_FRONTEND}/confirm-google-redirect`,
 };
