@@ -1,7 +1,8 @@
 import path from 'node:path';
 
 export const SERVER_DOMAIN = 'https://waterwise-backend.onrender.com';
-export const CLIENT_DOMAIN = 'http://localhost:5173';
+export const LOCALHOST = 'http://localhost:5173';
+export const DEPLOY_FRONTEND = 'https://water-wise-frontend.vercel.app';
 
 export const ENV_VARS = {
   PORT: 'PORT',
