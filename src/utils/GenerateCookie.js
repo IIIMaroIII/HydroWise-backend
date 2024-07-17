@@ -5,13 +5,13 @@ export const GenerateCookie = (session, res) => {
     httpOnly: true,
     sameSite: 'None',
     expires: new Date(Date.now() + TIME_DURATION.THIRTY_DAYS),
-    secure: true,
+    secure: false,
   });
 
   res.cookie(COOKIE.SESSION_ID, session.id, {
     httpOnly: true,
     sameSite: 'None',
     expires: new Date(Date.now() + TIME_DURATION.THIRTY_DAYS),
-    secure: true,
+    secure: false,
   });
 };
