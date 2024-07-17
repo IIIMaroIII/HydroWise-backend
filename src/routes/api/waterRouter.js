@@ -27,14 +27,14 @@ waterRouter.delete(
 );
 
 waterRouter.get(
-  '/daily',
-  validateBody(JoiSchemas.water.getDailyWaterSchema),
+  '/daily/:day/:month/:year',
+  // validateBody(JoiSchemas.water.getDailyWaterSchema),
   ctrlWrapper(Controllers.water.getDailyWaterVolumeController),
 );
 
 
 waterRouter.get(
-  '/monthly',
-  validateBody(JoiSchemas.water.getMonthlyWaterSchema),
+  '/monthly/:month/:year',
+  // validateBody(JoiSchemas.water.getMonthlyWaterSchema),
   ctrlWrapper(Controllers.water.getMonthlyWaterVolumeController),
 );

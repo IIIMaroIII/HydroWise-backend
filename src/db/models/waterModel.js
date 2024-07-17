@@ -9,18 +9,36 @@ const waterSchema = new Schema({
   },
   volume: {
     type: Number,
-      required: true,
-      default: 50,
+    required: true,
+    default: 50,
   },
   date: {
-    type: Date,
-    required: true
-  },
+    month: {
+      type: Number,
+      required: true
+    },
+    day: {
+      type: Number,
+      required: true
+    },
+    year: {
+      type: Number,
+      required: true
+    },
+    hours: {
+      type: Number,
+      required: true
+    },
+    minutes: {
+      type: Number,
+      required: true
+    }
+  }
   // time: {
-  //   type: String,
-  //   required: true
+  // type: Date,
+  // required: true
   // }
-}, { timestamps: true, versionKey: false  });;
+}, { timestamps: true, versionKey: false  });
 
 waterSchema.post('save', handleMongooseError);
 
