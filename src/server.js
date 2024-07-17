@@ -9,6 +9,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { router } from './routes/api/index.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
+import { resAccessOriginHeaders } from './utils/resAccessOrigin.js';
 
 export const setupServer = () => {
   const app = express();
@@ -20,6 +21,10 @@ export const setupServer = () => {
       credentials: true,
     }),
   );
+  app.use((req, res, next) => {
+    resAccessOriginHeaders(res);
+    next();
+  });
   app.use(cookieParser());
   app.use(express.json());
   app.use('/auth/uploads', express.static(DIR.UPLOAD));
