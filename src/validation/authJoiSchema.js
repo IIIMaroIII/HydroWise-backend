@@ -1,7 +1,6 @@
 import joi from 'joi';
 
 const registerUserSchema = joi.object({
-  name: joi.string().min(2).max(32),
   email: joi
     .string()
     .trim()
