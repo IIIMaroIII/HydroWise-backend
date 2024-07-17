@@ -4,7 +4,12 @@ import cookieParser from 'cookie-parser';
 
 import { logger } from './utils/pino.js';
 import { env } from './utils/env.js';
-import { DEPLOY_FRONTEND, DIR, ENV_VARS } from './constants/constants.js';
+import {
+  DEPLOY_FRONTEND,
+  DIR,
+  ENV_VARS,
+  LOCALHOST,
+} from './constants/constants.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { router } from './routes/api/index.js';
@@ -17,7 +22,7 @@ export const setupServer = () => {
   app.use(logger());
   app.use(
     cors({
-      origin: `${DEPLOY_FRONTEND}`,
+      origin: `${LOCALHOST}`,
       credentials: true,
     }),
   );
