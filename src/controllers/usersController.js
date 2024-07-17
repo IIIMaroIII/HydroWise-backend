@@ -1,8 +1,4 @@
-import {
-  CLIENT_DOMAIN,
-  COOKIE,
-  TIME_DURATION,
-} from '../constants/constants.js';
+import { COOKIE } from '../constants/constants.js';
 import { Services } from '../services/index.js';
 import { GenerateCookie } from '../utils/GenerateCookie.js';
 import { HttpError } from '../utils/HttpError.js';
