@@ -7,7 +7,7 @@ security:
   - bearerAuth: []
 parameters:
   - in: query
-    name: date
+    name: chosenDate
     schema:
       type: string
       example: 2024-07-03
