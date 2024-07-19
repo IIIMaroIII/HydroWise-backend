@@ -4,12 +4,12 @@ import Joi from 'joi';
 const addWaterSchema = Joi.object({
   userId: Joi.string(),
   waterValue: Joi.number().required(),
-  time: Joi.date().required()
+  time: Joi.string().required()
 });
 
 const editWaterSchema = Joi.object({
   waterValue: Joi.number(),
-  time: Joi.date()
+  time: Joi.string()
 });
 
 // const getDailyWaterSchema = Joi.object({
