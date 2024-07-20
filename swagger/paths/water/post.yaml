@@ -11,8 +11,8 @@ requestBody:
       schema:
         type: object
         required:
-          - volume
-          - date
+          - waterValue
+          - time
           - userId
         properties:
           volume:

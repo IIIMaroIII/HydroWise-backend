@@ -1,19 +1,22 @@
 import { endOfDay, endOfMonth, startOfDay, startOfMonth } from 'date-fns';
 import { Models } from '../db/models/index.js';
 
-const addWaterVolume = async ({ userId, time, waterValue }) => {
+const addWaterVolume = async ({ userId, formattedDateObj, waterValue }) => {
   const volumeRecord = await Models.WaterModel.create({
     userId: userId,
-    date: time,
+    date: formattedDateObj,
     volume: waterValue,
   });
   return volumeRecord;
 };
 
-const updateWaterVolume = async (id, { userId, ...payload }) => {
+const updateWaterVolume = async ({ id, userId, formattedDateObj, waterValue }) => {
   const volumeRecord = await Models.WaterModel.findOneAndUpdate(
     { _id: id, userId: userId },
-    { ...payload },
+    {
+      date: formattedDateObj,
+      volume: waterValue,
+    },
     { new: true },
   );
   return volumeRecord;
@@ -43,6 +46,17 @@ const getDailyWaterVolume = async ({ userId, formattedDateObj }) => {
   );
   return dailyItems;
 };
+
+
+
+/* const getMonthlyWaterVolume = async ({ userId, month, year }) => {
+  const start = startOfMonth(new Date(year, month - 1));
+  const end = endOfMonth(new Date(year, month - 1));
+
+  const monthlyItems = await Models.WaterModel.find({
+    userId: userId,
+    date: { $gte: start, $lte: end },
+  }); */
 
 const getMonthlyWaterVolume = async ({ userId, formattedDateObj }) => {
   const start = startOfMonth(formattedDateObj);

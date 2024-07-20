@@ -706,8 +706,8 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "volume",
-                  "date",
+                  "waterValue",
+                  "time",
                   "userId"
                 ],
                 "properties": {
@@ -844,19 +844,11 @@
         "parameters": [
           {
             "in": "query",
-            "name": "month",
+            "name": "date",
             "schema": {
-              "type": "number"
-            },
-            "example": 7
-          },
-          {
-            "in": "query",
-            "name": "year",
-            "schema": {
-              "type": "number"
-            },
-            "example": 2024
+              "type": "string",
+              "example": "2024-07-03"
+            }
           }
         ],
         "responses": {
@@ -927,10 +919,15 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "volume": {
+                  "waterValue": {
                     "description": "Volume of water",
                     "type": "number",
                     "example": 50
+                  },
+                  "time": {
+                    "description": "Time of day",
+                    "type": "string",
+                    "example": "07:00"
                   },
                   "userId": {
                     "description": "Water's user id",
@@ -1061,7 +1058,6 @@
         "required": [
           "volume",
           "date",
-          "time",
           "userId"
         ],
         "properties": {
@@ -1076,7 +1072,7 @@
             "example": 50
           },
           "date": {
-            "description": "Date of week",
+            "description": "Date",
             "type": "string",
             "example": "2024-07-03"
           },
