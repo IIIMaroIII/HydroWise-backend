@@ -33,7 +33,7 @@ waterRouter.get(
 );
 
 waterRouter.get(
-  '/monthly/:month/:year',
+  '/monthly',
   // validateBody(JoiSchemas.water.getMonthlyWaterSchema),
   ctrlWrapper(Controllers.water.getMonthlyWaterVolumeController),
 );
