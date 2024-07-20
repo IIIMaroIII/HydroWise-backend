@@ -37,7 +37,7 @@ export const waterEntries = (id) => [
   {
     userId: `${id}`,
     volume: 90,
-    date: new Date('2024-07-20T08:20:00.000Z'), // 30 июля 2024 года, 08:20
+    date: new Date('2024-07-19T09:20:00.000Z'), // 30 июля 2024 года, 08:20
   },
   {
     userId: `${id}`,
