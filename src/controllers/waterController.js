@@ -62,8 +62,8 @@ const getDailyWaterVolumeController = async (req, res) => {
 
   await WaterModel.deleteMany({ userId: id });
 
-  if (data.length === 0)
-    return HttpError(404, 'We have not found volumes according to chosen day');
+  // if (data.length === 0)
+  //   return HttpError(404, 'We have not found volumes according to chosen day');
 
   res.json(
     ResponseMaker(
@@ -85,11 +85,11 @@ const getMonthlyWaterVolumeController = async (req, res, next) => {
   });
   await WaterModel.deleteMany({ userId: id });
 
-  if (data.length === 0)
-    return HttpError(
-      404,
-      'We have not found volumes according to chosen month',
-    );
+  // if (data.length === 0)
+  //   return HttpError(
+  //     404,
+  //     'We have not found volumes according to chosen month',
+  //   );
 
   res.json(
     ResponseMaker(
