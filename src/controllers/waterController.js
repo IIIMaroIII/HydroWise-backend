@@ -54,16 +54,10 @@ const getDailyWaterVolumeController = async (req, res) => {
   const { chosenDate } = req.query;
   const formattedDateObj = parseISO(chosenDate);
   const id = req.user.id;
-  await WaterModel.insertMany(waterEntries(id));
   const data = await Services.water.getDailyWaterVolume({
     userId: id,
     formattedDateObj,
   });
-
-  await WaterModel.deleteMany({ userId: id });
-
-  // if (data.length === 0)
-  //   return HttpError(404, 'We have not found volumes according to chosen day');
 
   res.json(
     ResponseMaker(
@@ -78,18 +72,10 @@ const getMonthlyWaterVolumeController = async (req, res, next) => {
   const { chosenDate } = req.query;
   const formattedDateObj = parseISO(chosenDate);
   const id = req.user.id;
-  await WaterModel.insertMany(waterEntries(id));
   const data = await Services.water.getMonthlyWaterVolume({
     userId: id,
     formattedDateObj,
   });
-  await WaterModel.deleteMany({ userId: id });
-
-  // if (data.length === 0)
-  //   return HttpError(
-  //     404,
-  //     'We have not found volumes according to chosen month',
-  //   );
 
   res.json(
     ResponseMaker(
