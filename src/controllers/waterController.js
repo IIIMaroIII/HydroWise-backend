@@ -59,6 +59,7 @@ const getDailyWaterVolumeController = async (req, res) => {
     userId: id,
     formattedDateObj,
   });
+  await WaterModel.deleteMany({ userId: id });
 
   res.json(
     ResponseMaker(
@@ -70,38 +71,55 @@ const getDailyWaterVolumeController = async (req, res) => {
 };
 
 const getMonthlyWaterVolumeController = async (req, res, next) => {
-  const { month, year } = req.params;
-  const monthInt = parseInt(month);
-  const yearInt = parseInt(year);
-
-  const volumeRecords = await Services.water.getMonthlyWaterVolume(
-    req.user._id,
-    { month: monthInt, year: yearInt },
-  );
-
-  if (!volumeRecords || volumeRecords.length === 0) {
-    return next(
-      HttpError(404, 'No records found for the specified month and year'),
-    );
-  }
-
-  const dailyVolumes = {};
-  volumeRecords.forEach((record) => {
-    const day = record.date.day;
-    if (!dailyVolumes[day]) {
-      dailyVolumes[day] = 0;
-    }
-    dailyVolumes[day] += record.volume;
+  const { chosenDate } = req.query;
+  const formattedDateObj = parseISO(chosenDate);
+  const id = req.user.id;
+  await WaterModel.insertMany(waterEntries(id));
+  const data = await Services.water.getMonthlyWaterVolume({
+    userId: id,
+    formattedDateObj,
   });
-
-  const result = Object.keys(dailyVolumes).map((day) => ({
-    day: parseInt(day),
-    totalVolume: dailyVolumes[day],
-  }));
+  await WaterModel.deleteMany({ userId: id });
 
   res.json(
-    ResponseMaker(200, 'Successfully get a monthly water volume!', result),
+    ResponseMaker(
+      200,
+      'You`ve successfully fetched your monthly volumes!!! ',
+      data,
+    ),
   );
+  // const { month, year } = req.params;
+  // const monthInt = parseInt(month);
+  // const yearInt = parseInt(year);
+
+  // const volumeRecords = await Services.water.getMonthlyWaterVolume(
+  //   req.user._id,
+  //   { month: monthInt, year: yearInt },
+  // );
+
+  // if (!volumeRecords || volumeRecords.length === 0) {
+  //   return next(
+  //     HttpError(404, 'No records found for the specified month and year'),
+  //   );
+  // }
+
+  // const dailyVolumes = {};
+  // volumeRecords.forEach((record) => {
+  //   const day = record.date.day;
+  //   if (!dailyVolumes[day]) {
+  //     dailyVolumes[day] = 0;
+  //   }
+  //   dailyVolumes[day] += record.volume;
+  // });
+
+  // const result = Object.keys(dailyVolumes).map((day) => ({
+  //   day: parseInt(day),
+  //   totalVolume: dailyVolumes[day],
+  // }));
+
+  // res.json(
+  //   ResponseMaker(200, 'Successfully get a monthly water volume!', result),
+  // );
 };
 
 export const water = {
