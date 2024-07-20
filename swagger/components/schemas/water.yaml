@@ -2,7 +2,6 @@ type: object
 required:
   - volume
   - date
-  - time
   - userId
 
 properties:
@@ -15,7 +14,7 @@ properties:
     type: number
     example: 50
   date:
-    description: 'Date of week'
+    description: 'Date'
     type: string
     example: 2024-07-03
   userId:

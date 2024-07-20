@@ -7,15 +7,10 @@ security:
   - bearerAuth: []
 parameters:
   - in: query
-    name: month
+    name: chosenDate
     schema:
-      type: number
-    example: 07
-  - in: query
-    name: year
-    schema:
-      type: number
-    example: 2024
+      type: string
+      example: 2024-07-03
 responses:
   '200':
     description: 'Gets a monthly water volume'
