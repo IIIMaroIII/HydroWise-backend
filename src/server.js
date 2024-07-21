@@ -23,7 +23,7 @@ export const setupServer = () => {
   app.use(logger());
   app.use(
     cors({
-      origin: `${DEPLOY_FRONTEND}`,
+      origin: `${LOCALHOST}`,
       credentials: true,
     }),
   );
