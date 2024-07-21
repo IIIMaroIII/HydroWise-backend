@@ -17,7 +17,7 @@ const LoginController = async (req, res, next) => {
   const session = await Services.users.loginUser(req.body);
   if (!session) return next(HttpError(500, 'Internal Server Error'));
 
-  GenerateCookie(session, res);
+  GenerateCookie(req, session, res);
 
   res.json(
     ResponseMaker(200, 'You`ve been successfully logged in!', {
@@ -40,7 +40,7 @@ const RefreshController = async (req, res, next) => {
   });
   if (!session) return next(HttpError(500, 'Internal Server Error'));
 
-  GenerateCookie(session, res);
+  GenerateCookie(req, session, res);
 
   res.json(
     ResponseMaker(200, 'The session has been successfully refreshed!', {
@@ -127,7 +127,7 @@ const getGoogleAuthUrlController = async (req, res) => {
 const loginWithGoogleController = async (req, res) => {
   const session = await Services.users.loginOrSignupWithGoogle(req.body.code);
 
-  GenerateCookie(session, res);
+  GenerateCookie(req, session, res);
 
   res.json(
     ResponseMaker(200, 'Successfully logged in via Google OAuth!', {
