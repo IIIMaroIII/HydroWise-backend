@@ -9,11 +9,16 @@ import {
 //   res.header('Access-Control-Allow-Credentials', 'true');
 // };
 export const resAccessOriginHeaders = (res, origin) => {
-  if (ALLOWED_ORIGINS.includes(origin)) {
+  const normalizedOrigin = origin.endsWith('/') ? origin.slice(0, -1) : origin;
+
+  if (
+    ALLOWED_ORIGINS.some((allowedOrigin) => normalizedOrigin === allowedOrigin)
+  ) {
     res.header('Access-Control-Allow-Origin', origin);
   } else {
     res.header('Access-Control-Allow-Origin', ''); // Deny access
   }
+
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header(
     'Access-Control-Allow-Headers',
