@@ -21,24 +21,24 @@ export const setupServer = () => {
   const app = express();
 
   app.use(logger());
-  // app.use(
-  //   cors({
-  //     origin: `${DEPLOY_FRONTEND}`,
-  //     credentials: true,
-  //   }),
-  // );
   app.use(
     cors({
-      origin: (origin, callback) => {
-        if (ALLOWED_ORIGINS.includes(origin) || !origin) {
-          callback(null, true);
-        } else {
-          callback(new Error('Not allowed by CORS'));
-        }
-      },
+      origin: `${DEPLOY_FRONTEND}`,
       credentials: true,
     }),
   );
+  // app.use(
+  //   cors({
+  //     origin: (origin, callback) => {
+  //       if (ALLOWED_ORIGINS.includes(origin) || !origin) {
+  //         callback(null, true);
+  //       } else {
+  //         callback(new Error('Not allowed by CORS'));
+  //       }
+  //     },
+  //     credentials: true,
+  //   }),
+  // );
   app.use((req, res, next) => {
     resAccessOriginHeaders(res);
     next();
