@@ -67,50 +67,6 @@ const getDailyWaterVolumeController = async (req, res) => {
   );
 };
 
-/* const getMonthlyWaterVolumeController = async (req, res) => {
-    const { chosenDate } = req.query;
-    const formattedDateObj = parseISO(chosenDate);
-    const id = req.user._id;
-    const month = formattedDateObj.getMonth();
-    const year = formattedDateObj.getFullYear();
-    const volumeRecords = await Services.water.getMonthlyWaterVolume({
-      userId: id,
-      month,
-      year,
-    });
-
-    const dailyVolumes = {};
-    volumeRecords.forEach((record) => {
-      const day = new Date(record.date).getDate();
-      if (!dailyVolumes[day]) {
-        dailyVolumes[day] = 0;
-      }
-      dailyVolumes[day] += record.volume;
-    });
-
-    const result = Object.keys(dailyVolumes).map((day) => ({
-      day: parseInt(day),
-      totalVolume: dailyVolumes[day],
-    }));
-
-    res.json(
-      ResponseMaker(200, 'Successfully retrieved monthly water volume!', result),
-    );
-};
-
-  if (data.length === 0)
-    return HttpError(404, 'We have not found volumes according to chosen day');
-
->>>>>>> main
-  res.json(
-    ResponseMaker(
-      200,
-      'You`ve successfully fetched your volumes for chosen day!!! ',
-      data,
-    ),
-  );
-}; */
-
 const getMonthlyWaterVolumeController = async (req, res, next) => {
   const { chosenDate } = req.query;
   console.log('chosenDate in controller', chosenDate);

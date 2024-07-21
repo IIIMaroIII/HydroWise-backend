@@ -16,7 +16,7 @@ const userSchema = new Schema(
     password: { type: String, required: [true, 'Password is required!'] },
     name: { type: String, default: null },
     gender: { type: String, default: null },
-    dailyNorma: { type: Number, default: null },
+    dailyNorma: { type: Number, default: 1.8 },
     weight: { type: String, default: null },
     photoUrl: { type: String, default: null },
     timeInSports: { type: Number, default: null },
