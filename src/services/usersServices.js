@@ -28,9 +28,9 @@ const loginUser = async (payload) => {
   const isPasswordEqual = await bcrypt.compare(payload.password, user.password);
   if (!isPasswordEqual) throw HttpError(401, 'Unauthorized!');
 
-  await Models.SessionModel.deleteOne({ userId: user._id });
+  await Models.SessionModel.deleteOne({ userId: user.id });
 
-  return await Models.SessionModel.create(NewSession(user._id));
+  return await Models.SessionModel.create(NewSession(user.id));
 };
 
 const refreshUsersSession = async ({ sessionId, refreshToken }) => {

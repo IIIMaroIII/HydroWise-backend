@@ -6,7 +6,7 @@ import {
   TIME_DURATION,
 } from '../constants/constants.js';
 
-export const GenerateCookie = (req, session, res) => {
+export const GenerateCookie = (session, res) => {
   res.cookie(COOKIE.REFRESH_TOKEN, session.refreshToken, {
     httpOnly: true,
     sameSite: 'None',

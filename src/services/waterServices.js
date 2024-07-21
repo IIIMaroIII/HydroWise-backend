@@ -33,7 +33,7 @@ const updateWaterVolume = async ({
 };
 
 const deleteWaterVolume = async (userId, id) => {
-  const volumeRecord = await Models.WaterModel.findOneAndDelete({
+  const volumeRecord = await Models.WaterModel.deleteOne({
     _id: id,
     userId,
   });
