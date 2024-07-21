@@ -45,7 +45,7 @@ export const setupServer = () => {
   });
   app.use(cookieParser());
   app.use(express.json());
-  app.use('/auth/uploads', express.static(DIR.UPLOAD));
+  app.use('/v1/users/uploads', express.static(DIR.UPLOAD));
   app.use('/v1/api-docs', swaggerDocs());
   app.use(router);
 
