@@ -3,6 +3,7 @@ import { Services } from '../services/index.js';
 import { ResponseMaker } from '../utils/responseMaker.js';
 import { HttpError } from '../utils/HttpError.js';
 import { parseISO } from 'date-fns';
+import { generateData } from '../utils/generateVolumesForDB.js';
 
 const addWaterVolumeController = async (req, res) => {
   const { waterValue, time } = req.body;
@@ -48,15 +49,14 @@ const deleteWaterVolumeController = async (req, res, next) => {
 
 const getDailyWaterVolumeController = async (req, res) => {
   const { chosenDate } = req.query;
-  console.log('typeof ChosenDate in controller', typeof chosenDate);
-  const formattedDateObj = parseISO(chosenDate);
-  console.log('typeof formattedDateObj in controller', typeof formattedDateObj);
-  const id = req.user._id;
+  console.log('chosenDate in controller', chosenDate);
+
+  // generateData(req.user._id);
+
   const data = await Services.water.getDailyWaterVolume({
-    userId: id,
-    formattedDateObj,
+    userId: req.user._id,
+    chosenDate,
   });
-  console.log('typeof data[0].date in cont', typeof data[0].date);
 
   res.json(
     ResponseMaker(
@@ -113,51 +113,22 @@ const getDailyWaterVolumeController = async (req, res) => {
 
 const getMonthlyWaterVolumeController = async (req, res, next) => {
   const { chosenDate } = req.query;
-  const formattedDateObj = parseISO(chosenDate);
-  const id = req.user.id;
+  console.log('chosenDate in controller', chosenDate);
+
+  // generateData(req.user._id);
+
   const data = await Services.water.getMonthlyWaterVolume({
-    userId: id,
-    formattedDateObj,
+    userId: req.user._id,
+    chosenDate,
   });
+
   res.json(
     ResponseMaker(
       200,
-      'You`ve successfully fetched your monthly volumes!!! ',
+      'You’ve successfully fetched your monthly volumes!',
       data,
     ),
   );
-  // const { month, year } = req.params;
-  // const monthInt = parseInt(month);
-  // const yearInt = parseInt(year);
-
-  // const volumeRecords = await Services.water.getMonthlyWaterVolume(
-  //   req.user._id,
-  //   { month: monthInt, year: yearInt },
-  // );
-
-  // if (!volumeRecords || volumeRecords.length === 0) {
-  //   return next(
-  //     HttpError(404, 'No records found for the specified month and year'),
-  //   );
-  // }
-
-  // const dailyVolumes = {};
-  // volumeRecords.forEach((record) => {
-  //   const day = record.date.day;
-  //   if (!dailyVolumes[day]) {
-  //     dailyVolumes[day] = 0;
-  //   }
-  //   dailyVolumes[day] += record.volume;
-  // });
-
-  // const result = Object.keys(dailyVolumes).map((day) => ({
-  //   day: parseInt(day),
-  //   totalVolume: dailyVolumes[day],
-  // }));
-
-  // res.json(
-  //   ResponseMaker(200, 'Successfully get a monthly water volume!', result),
-  // );
 };
 
 export const water = {

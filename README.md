@@ -441,3 +441,44 @@ Axios:
 
 Вы создали экземпляр AxiosWithCredentials с withCredentials: true, что позволяет отправлять куки с запросами.
 Вы настроили интерцептор, который добавляет токен авторизации к заголовкам запросов, если он доступен в состоянии Redux.
+
+---
+
+## date local service
+
+Для того чтобы функции startOfDay и endOfDay работали корректно с вашими данными и не приводили к неожиданным сдвигам из-за часового пояса, вы должны создать объекты Date из строки с указанием часового пояса. В вашем случае, если время приходит в формате '2024-07-02T22:02:27-04:00', это указывает на часовой пояс UTC-4.
+
+Для корректной работы, вам нужно создать даты с правильным часовым поясом, чтобы startOfDay и endOfDay возвращали ожидаемые значения. Однако, учитывая, что функции startOfDay и endOfDay из библиотеки date-fns не поддерживают работу с часовыми поясами напрямую, решением может быть конвертация времени в локальное время перед использованием этих функций, исходя из вашего часового пояса (приложения), который, по всей видимости, находится в UTC.
+
+Изменение функций startOfDay и endOfDay
+Вам нужно использовать функцию parseISO для создания объекта Date из вашей ISO строки и затем использовать этот объект Date в функциях startOfDay и endOfDay.
+
+javascript
+Copy code
+const getDailyWaterVolume = async ({ userId, chosenDate }) => {
+console.log('chosenDate in service', chosenDate);
+
+// Создаем объект Date из ISO строки, преобразуя в локальное время сервера
+const dateObj = new Date(chosenDate);
+
+const start = startOfDay(dateObj);
+const end = endOfDay(dateObj);
+
+console.log('start', start.toISOString());
+console.log('end', end.toISOString());
+
+try {
+const dailyItems = await Models.WaterModel.find({
+userId,
+date: { $gte: start, $lte: end },
+}, {
+createdAt: 0,
+updatedAt: 0,
+});
+console.log('dailyItems', dailyItems);
+return dailyItems;
+} catch (error) {
+console.error('Error retrieving daily water volumes in service:', error);
+}
+};
+Это изменение гарантирует, что временные метки начала и конца дня будут соответствовать локальному времени сервера, исходя из времени, предоставленного в запросе, без неожиданных сдвигов из-за часовых поясов.
