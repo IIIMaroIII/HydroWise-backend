@@ -4,6 +4,11 @@ export const SERVER_DOMAIN = 'https://waterwise-backend.onrender.com';
 export const LOCALHOST = 'http://localhost:5173';
 export const DEPLOY_FRONTEND = 'https://water-wise-frontend.vercel.app';
 
+export const ALLOWED_ORIGINS = [
+  'http://localhost:5173',
+  'https://water-wise-frontend.vercel.app/',
+];
+
 export const ENV_VARS = {
   PORT: 'PORT',
   MONGODB_USER: 'MONGODB_USER',

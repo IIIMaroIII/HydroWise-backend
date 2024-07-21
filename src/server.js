@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import { logger } from './utils/pino.js';
 import { env } from './utils/env.js';
 import {
+  ALLOWED_ORIGINS,
   DEPLOY_FRONTEND,
   DIR,
   ENV_VARS,
@@ -20,9 +21,21 @@ export const setupServer = () => {
   const app = express();
 
   app.use(logger());
+  // app.use(
+  //   cors({
+  //     origin: `${DEPLOY_FRONTEND}`,
+  //     credentials: true,
+  //   }),
+  // );
   app.use(
     cors({
-      origin: `${LOCALHOST}`,
+      origin: (origin, callback) => {
+        if (ALLOWED_ORIGINS.includes(origin) || !origin) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
       credentials: true,
     }),
   );

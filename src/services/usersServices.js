@@ -128,8 +128,19 @@ const loginOrSignupWithGoogle = async (code) => {
   return await Models.SessionModel.create(NewSession(user.id));
 };
 
+const updateUser = async ({ contactId, userId }, payload, options = {}) =>
+  await Models.ContactModel.findOneAndUpdate(
+    { _id: contactId, userId },
+    payload,
+    {
+      new: true,
+      ...options,
+    },
+  );
+
 export const users = {
   registerUser,
+  updateUser,
   loginUser,
   refreshUsersSession,
   logoutUser,
