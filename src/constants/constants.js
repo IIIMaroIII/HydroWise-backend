@@ -18,6 +18,11 @@ export const ENV_VARS = {
   APP_DOMAIN: 'APP_DOMAIN',
 };
 
+export const USER = {
+  DEFAULT_USER_IMAGE:
+    'https://img.icons8.com/?size=100&id=8VXh2TzKXNG8&format=png&color=000000',
+};
+
 export const DIR = {
   TEMP: path.join(process.cwd(), 'temp'),
   UPLOAD: path.join(process.cwd(), 'uploads'),
