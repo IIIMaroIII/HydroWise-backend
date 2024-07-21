@@ -4,6 +4,7 @@ import { validateBody } from '../../middlewares/validateBody.js';
 import { ctrlWrapper } from '../../utils/ctrlWrapper.js';
 import { Controllers } from '../../controllers/index.js';
 import { authenticate } from '../../middlewares/authenticate.js';
+import { upload } from '../../middlewares/upload.js';
 
 export const usersRouter = express.Router();
 
@@ -29,6 +30,13 @@ usersRouter.post(
   '/logout',
   authenticate,
   ctrlWrapper(Controllers.users.LogoutController),
+);
+
+usersRouter.patch(
+  '/:userId',
+  upload.single('photoUrl'),
+  validateBody(JoiSchemas.contacts.patchSchema),
+  ctrlWrapper(Controllers.contacts.updateContactController),
 );
 
 usersRouter.post(
