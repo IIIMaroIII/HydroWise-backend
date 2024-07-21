@@ -42,7 +42,7 @@ const deleteWaterVolumeController = async (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     // проверить вроде мтддлвар глобальный должен быть
     return next(HttpError(404, 'Record not found'));
-  const volumeRecord = await Services.water.deleteWaterVolume(req.user._id, id);
+  const volumeRecord = await Services.water.deleteWaterVolume(req.user.id, id);
   if (!volumeRecord) return next(HttpError(404, 'Record not found'));
   res.status(204).send();
 };
@@ -51,7 +51,7 @@ const getDailyWaterVolumeController = async (req, res) => {
   const { chosenDate } = req.query;
   console.log('chosenDate in controller', chosenDate);
 
-  // generateData(req.user._id);
+  generateData(req.user._id);
 
   const data = await Services.water.getDailyWaterVolume({
     userId: req.user._id,
@@ -71,7 +71,7 @@ const getMonthlyWaterVolumeController = async (req, res, next) => {
   const { chosenDate } = req.query;
   console.log('chosenDate in controller', chosenDate);
 
-  // generateData(req.user._id);
+  generateData(req.user.id);
 
   const data = await Services.water.getMonthlyWaterVolume({
     userId: req.user._id,
