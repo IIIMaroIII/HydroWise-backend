@@ -45,25 +45,20 @@ export const setupServer = () => {
     next();
   });
   app.use(helmet());
-
   app.use(
     helmet.contentSecurityPolicy({
       directives: {
         defaultSrc: ["'self'"],
-        imgSrc: [
-          "'self'",
-          'data:',
-          'blob:',
-          'https://img.icons8.com', // добавьте другие источники, если необходимо
-        ],
+        imgSrc: ["'self'", 'data:', 'blob:', 'https://img.icons8.com'],
         scriptSrc: ["'self'", "'unsafe-inline'"],
         styleSrc: ["'self'", "'unsafe-inline'"],
-        fontSrc: ["'self'", 'https://fonts.gstatic.com'], // добавьте другие необходимые источники
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
         connectSrc: [
           "'self'",
           'https://img.icons8.com',
           'https://water-wise-frontend.vercel.app',
         ],
+        objectSrc: ["'self'"],
       },
     }),
   );
