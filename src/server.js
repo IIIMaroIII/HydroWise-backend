@@ -28,19 +28,24 @@ export const setupServer = () => {
   ];
 
   app.use(logger());
-
   app.use(
     cors({
-      origin: function (origin, callback) {
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-          callback(null, true);
-        } else {
-          callback(new Error('Not allowed by CORS'));
-        }
-      },
+      origin: '*',
       credentials: true,
     }),
   );
+  // app.use(
+  //   cors({
+  //     origin: function (origin, callback) {
+  //       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+  //         callback(null, true);
+  //       } else {
+  //         callback(new Error('Not allowed by CORS'));
+  //       }
+  //     },
+  //     credentials: true,
+  //   }),
+  // );
 
   // app.use(
   //   cors({
@@ -48,10 +53,10 @@ export const setupServer = () => {
   //     credentials: true,
   //   }),
   // );
-  app.use((req, res, next) => {
-    resAccessOriginHeaders(res);
-    next();
-  });
+  // app.use((req, res, next) => {
+  //   resAccessOriginHeaders(res);
+  //   next();
+  // });
   app.use(helmet());
   app.use(
     helmet.contentSecurityPolicy({
