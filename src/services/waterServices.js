@@ -1,15 +1,12 @@
-import { endOfDay, endOfMonth, startOfDay, startOfMonth } from 'date-fns';
 import { Models } from '../db/models/index.js';
-import { startOfDayUtc } from '../utils/startOfDayUTC.js';
-import { endOfDayUtc } from '../utils/endOfDayUTC.js';
 import { HttpError } from '../utils/HttpError.js';
 import { getStartAndEndOfDay } from '../utils/getStartAndEndOfDay.js';
 import { getStartAndEndOfMonth } from '../utils/getStartAndEndOfMonth.js';
 
-const addWaterVolume = async ({ userId, formattedDateObj, waterValue }) => {
+const addWaterVolume = async ({ userId, date, waterValue }) => {
   const volumeRecord = await Models.WaterModel.create({
-    userId: userId,
-    date: formattedDateObj,
+    userId,
+    date,
     volume: waterValue,
   });
   return volumeRecord;
