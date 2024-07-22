@@ -28,12 +28,12 @@ export const setupServer = () => {
   // ];
 
   app.use(logger());
-  app.use(
-    cors({
-      // origin: '*',
-      credentials: true,
-    }),
-  );
+  // app.use(
+  //   cors({
+  //     origin: '*',
+  //     credentials: true,
+  //   }),
+  // );
   // app.use(
   //   cors({
   //     origin: function (origin, callback) {
