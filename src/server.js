@@ -44,9 +44,8 @@ export const setupServer = () => {
     resAccessOriginHeaders(res);
     next();
   });
-  app.use(helmet()); // добавлено для безопасности
+  app.use(helmet());
 
-  // Настройка Content Security Policy
   app.use(
     helmet.contentSecurityPolicy({
       directives: {
@@ -59,7 +58,12 @@ export const setupServer = () => {
         ],
         scriptSrc: ["'self'", "'unsafe-inline'"],
         styleSrc: ["'self'", "'unsafe-inline'"],
-        // добавьте другие директивы по необходимости
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'], // добавьте другие необходимые источники
+        connectSrc: [
+          "'self'",
+          'https://img.icons8.com',
+          'https://water-wise-frontend.vercel.app',
+        ],
       },
     }),
   );
