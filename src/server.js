@@ -16,6 +16,7 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { router } from './routes/api/index.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 import { resAccessOriginHeaders } from './utils/resAccessOrigin.js';
+import helmet from 'helmet';
 
 export const setupServer = () => {
   const app = express();
@@ -43,6 +44,25 @@ export const setupServer = () => {
     resAccessOriginHeaders(res);
     next();
   });
+  app.use(helmet()); // добавлено для безопасности
+
+  // Настройка Content Security Policy
+  app.use(
+    helmet.contentSecurityPolicy({
+      directives: {
+        defaultSrc: ["'self'"],
+        imgSrc: [
+          "'self'",
+          'data:',
+          'blob:',
+          'https://img.icons8.com', // добавьте другие источники, если необходимо
+        ],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        // добавьте другие директивы по необходимости
+      },
+    }),
+  );
   app.use(cookieParser());
   app.use(express.json());
   app.use('/v1/users/uploads', express.static(DIR.UPLOAD));
