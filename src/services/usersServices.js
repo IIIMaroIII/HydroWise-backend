@@ -41,7 +41,8 @@ const refreshUsersSession = async ({ sessionId, refreshToken }) => {
   if (!session) throw HttpError(401, 'The session was not found!');
 
   const isTokenExpired = new Date() > session.refreshTokenValidUntil;
-  if (isTokenExpired) throw HttpError(401, 'The session token has expired!');
+  if (isTokenExpired)
+    throw HttpError(401, 'The refresh session token has expired!');
 
   await Models.SessionModel.findOneAndDelete({
     _id: sessionId,
