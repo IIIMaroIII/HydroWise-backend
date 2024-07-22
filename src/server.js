@@ -22,10 +22,10 @@ export const setupServer = () => {
   const app = express();
 
   app.use(logger());
-  const allowedOrigins = [
-    'https://water-wise-frontend.vercel.app',
-    'http://localhost:5173',
-  ];
+  // const allowedOrigins = [
+  //   'https://water-wise-frontend.vercel.app',
+  //   'http://localhost:5173',
+  // ];
 
   app.use(logger());
   app.use(
@@ -47,16 +47,16 @@ export const setupServer = () => {
   //   }),
   // );
 
-  // app.use(
-  //   cors({
-  //     origin: `${DEPLOY_FRONTEND}`,
-  //     credentials: true,
-  //   }),
-  // );
-  // app.use((req, res, next) => {
-  //   resAccessOriginHeaders(res);
-  //   next();
-  // });
+  app.use(
+    cors({
+      origin: `${DEPLOY_FRONTEND}`,
+      credentials: true,
+    }),
+  );
+  app.use((req, res, next) => {
+    resAccessOriginHeaders(res);
+    next();
+  });
   app.use(helmet());
   app.use(
     helmet.contentSecurityPolicy({
