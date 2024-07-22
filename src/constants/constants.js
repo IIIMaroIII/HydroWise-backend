@@ -2,9 +2,9 @@ import path from 'node:path';
 
 export const SERVER_DOMAIN = 'https://waterwise-backend.onrender.com';
 export const LOCALHOST = 'http://localhost:5173';
-export const DEPLOY_FRONTEND = 'https://water-wise-frontend.vercel.app'; //https://water-wise-frontend.vercel.app/src/assets/pictures/HomePage/sprite.svg
+export const DEPLOY_FRONTEND = 'https://water-wise-frontend.vercel.app';
 
-http: export const ALLOWED_ORIGINS = [
+export const ALLOWED_ORIGINS = [
   'http://localhost:5173',
   'https://water-wise-frontend.vercel.app',
 ];
