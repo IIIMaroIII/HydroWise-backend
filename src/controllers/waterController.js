@@ -6,11 +6,13 @@ import { parseISO } from 'date-fns';
 import { generateData } from '../utils/generateVolumesForDB.js';
 
 const addWaterVolumeController = async (req, res) => {
-  const { waterValue, time } = req.body;
-  const formattedDateObj = parseISO(time);
+  const { waterValue, date } = req.body;
+  console.log('waterValue', waterValue);
+  console.log('date', date);
+
   const volumeRecord = await Services.water.addWaterVolume({
     waterValue,
-    formattedDateObj,
+    date,
     userId: req.user._id,
   });
   res.json(
@@ -49,9 +51,8 @@ const deleteWaterVolumeController = async (req, res, next) => {
 
 const getDailyWaterVolumeController = async (req, res) => {
   const { chosenDate } = req.query;
-  console.log('chosenDate in controller', chosenDate);
 
-  generateData(req.user._id);
+  // generateData(req.user._id);
 
   const data = await Services.water.getDailyWaterVolume({
     userId: req.user._id,
@@ -71,7 +72,7 @@ const getMonthlyWaterVolumeController = async (req, res, next) => {
   const { chosenDate } = req.query;
   console.log('chosenDate in controller', chosenDate);
 
-  generateData(req.user.id);
+  // generateData(req.user.id);
 
   const data = await Services.water.getMonthlyWaterVolume({
     userId: req.user._id,

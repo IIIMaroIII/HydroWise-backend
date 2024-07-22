@@ -4,14 +4,17 @@ import { validateBody } from '../../middlewares/validateBody.js';
 import { ctrlWrapper } from '../../utils/ctrlWrapper.js';
 import { Controllers } from '../../controllers/index.js';
 import { authenticate } from '../../middlewares/authenticate.js';
+import multer from 'multer';
 
 export const waterRouter = express.Router();
+const upload = multer();
 
 waterRouter.use(authenticate);
 
 waterRouter.post(
   '/',
-  validateBody(JoiSchemas.water.addWaterSchema),
+  upload.none(),
+  // validateBody(JoiSchemas.water.addWaterSchema),
   ctrlWrapper(Controllers.water.addWaterVolumeController),
 );
 
