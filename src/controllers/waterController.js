@@ -52,8 +52,6 @@ const deleteWaterVolumeController = async (req, res, next) => {
 const getDailyWaterVolumeController = async (req, res) => {
   const { chosenDate } = req.query;
 
-  // generateData(req.user._id);
-
   const data = await Services.water.getDailyWaterVolume({
     userId: req.user._id,
     chosenDate,
@@ -71,8 +69,6 @@ const getDailyWaterVolumeController = async (req, res) => {
 const getMonthlyWaterVolumeController = async (req, res, next) => {
   const { chosenDate } = req.query;
   console.log('chosenDate in controller', chosenDate);
-
-  // generateData(req.user.id);
 
   const data = await Services.water.getMonthlyWaterVolume({
     userId: req.user._id,
