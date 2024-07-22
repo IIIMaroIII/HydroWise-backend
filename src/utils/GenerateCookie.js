@@ -9,16 +9,16 @@ import {
 export const GenerateCookie = (session, res) => {
   res.cookie(COOKIE.REFRESH_TOKEN, session.refreshToken, {
     httpOnly: true,
-    // sameSite: 'None',
+    sameSite: 'None',
     expires: new Date(Date.now() + TIME_DURATION.THIRTY_DAYS),
-    // secure: true,
+    secure: true,
   });
 
   res.cookie(COOKIE.SESSION_ID, session.id, {
     httpOnly: true,
-    // sameSite: 'None',
+    sameSite: 'None',
     expires: new Date(Date.now() + TIME_DURATION.THIRTY_DAYS),
-    // secure: true,
+    secure: true,
   });
 
   // Determine the domain for cookies based on the origin
