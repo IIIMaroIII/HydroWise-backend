@@ -20,11 +20,7 @@ usersRouter.post(
   ctrlWrapper(Controllers.users.LoginController),
 );
 
-usersRouter.post(
-  '/refresh',
-  authenticate,
-  ctrlWrapper(Controllers.users.RefreshController),
-);
+usersRouter.post('/refresh', ctrlWrapper(Controllers.users.RefreshController));
 
 usersRouter.post(
   '/logout',
