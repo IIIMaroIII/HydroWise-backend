@@ -2,6 +2,7 @@ import { CLOUDINARY, COOKIE, USER } from '../constants/constants.js';
 import { Services } from '../services/index.js';
 import { GenerateCookie } from '../utils/GenerateCookie.js';
 import { HttpError } from '../utils/HttpError.js';
+import { calculateDailyWaterIntake } from '../utils/calculateDailyWaterIntake.js';
 import { env } from '../utils/env.js';
 import { googleOauth } from '../utils/googleOauth.js';
 import { ResponseMaker } from '../utils/responseMaker.js';
@@ -65,6 +66,26 @@ const UpdateController = async (req, res, next) => {
     }
   }
 
+  const dailyNorma = calculateDailyWaterIntake(gender, weight, activeTime);
+  // if (gender === 'woman' &&) {
+  //   dailyNorma = weight * 0.03 + (activeTime ? activeTime * 0.4 : 0);
+  // } else if (gender === 'man') {
+  //   dailyNorma = weight * 0.04 + (activeTime ? activeTime * 0.6 : 0);
+  // }
+  // try {
+  //   dailyNorma = calculateDailyWaterIntake(
+  //     gender,
+  //     parseFloat(weight),
+  //     parseFloat(activeTime),
+  //   );
+  // } catch (error) {
+  //   throw HttpError(
+  //     400,
+  //     'Bad request with income data to count waterIntake',
+  //     error,
+  //   );
+  // }
+  console.log('dailyNorma', dailyNorma);
   const result = await Services.users.updateUser(
     { _id: req.user.id },
     {
