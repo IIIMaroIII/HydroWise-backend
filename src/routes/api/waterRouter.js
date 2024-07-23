@@ -19,8 +19,9 @@ waterRouter.post(
 );
 
 waterRouter.patch(
-  '/:id',
-  validateBody(JoiSchemas.water.editWaterSchema),
+  '/:chosenCardId',
+  upload.none(),
+  // validateBody(JoiSchemas.water.editWaterSchema),
   ctrlWrapper(Controllers.water.editWaterVolumeController),
 );
 

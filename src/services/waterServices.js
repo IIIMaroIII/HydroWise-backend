@@ -13,15 +13,15 @@ const addWaterVolume = async ({ userId, date, waterValue }) => {
 };
 
 const updateWaterVolume = async ({
-  id,
+  chosenCardId,
   userId,
-  formattedDateObj,
+  date,
   waterValue,
 }) => {
   const volumeRecord = await Models.WaterModel.findOneAndUpdate(
-    { _id: id, userId: userId },
+    { _id: chosenCardId, userId },
     {
-      date: formattedDateObj,
+      date,
       volume: waterValue,
     },
     { new: true },
@@ -38,18 +38,7 @@ const deleteWaterVolume = async (userId, id) => {
 };
 
 const getDailyWaterVolume = async ({ userId, chosenDate }) => {
-  console.log('chosenDate in service', chosenDate);
-  console.log('chosenDate.toString()', chosenDate.toString());
-  console.log('chosenDate.toLocaleString()', chosenDate.toLocaleString());
-
-  // const start = startOfDay(chosenDate.toLocaleString());
-  // console.log('start', start);
-  // const end = endOfDay(chosenDate.toLocaleString());
-  // console.log('end', end);
-
   const { start, end } = getStartAndEndOfDay(chosenDate);
-  console.log('start', start);
-  console.log('end', end);
 
   try {
     const dailyItems = await Models.WaterModel.find(

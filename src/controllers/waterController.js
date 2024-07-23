@@ -7,8 +7,6 @@ import { generateData } from '../utils/generateVolumesForDB.js';
 
 const addWaterVolumeController = async (req, res) => {
   const { waterValue, date } = req.body;
-  console.log('waterValue', waterValue);
-  console.log('date', date);
 
   const volumeRecord = await Services.water.addWaterVolume({
     waterValue,
@@ -21,21 +19,18 @@ const addWaterVolumeController = async (req, res) => {
 };
 
 const editWaterVolumeController = async (req, res, next) => {
-  const id = req.params.id;
-  const { waterValue, time } = req.body;
-  const formattedDateObj = parseISO(time);
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return next(HttpError(404, 'Record not found'));
+  const { chosenCardId } = req.params;
+  const { waterValue, date } = req.body;
 
   const volumeRecord = await Services.water.updateWaterVolume({
-    id,
+    chosenCardId,
     userId: req.user._id,
+    date,
     waterValue,
-    formattedDateObj,
   });
-  if (!volumeRecord) return next(HttpError(404, 'Record not found'));
+
   res.json(
-    ResponseMaker(200, 'Successfully change a water volume!', volumeRecord),
+    ResponseMaker(201, 'Successfully edited a water volume!', volumeRecord),
   );
 };
 
