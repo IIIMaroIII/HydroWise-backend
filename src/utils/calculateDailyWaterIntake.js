@@ -1,10 +1,5 @@
 export const calculateDailyWaterIntake = (gender, weight, activeTime) => {
-  if (
-    typeof weight !== 'number' ||
-    weight <= 0 ||
-    typeof activeTime !== 'number' ||
-    activeTime < 0
-  ) {
+  if (weight <= 0 || activeTime < 0) {
     throw new Error(
       'Invalid input: weight must be a positive number and active time must be a non-negative number.',
     );
