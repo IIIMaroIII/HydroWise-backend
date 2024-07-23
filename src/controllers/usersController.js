@@ -2,6 +2,7 @@ import { CLOUDINARY, COOKIE, USER } from '../constants/constants.js';
 import { Services } from '../services/index.js';
 import { GenerateCookie } from '../utils/GenerateCookie.js';
 import { HttpError } from '../utils/HttpError.js';
+import { env } from '../utils/env.js';
 import { googleOauth } from '../utils/googleOauth.js';
 import { ResponseMaker } from '../utils/responseMaker.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
@@ -51,33 +52,42 @@ const RefreshController = async (req, res, next) => {
 };
 
 const UpdateController = async (req, res, next) => {
-  const { body } = req;
-  const { userId } = req.params;
-  const photoUrl = req.file;
+  const { file, body } = req;
+  const { gender, name, email, weight, activeTime, waterIntake } = body;
 
   let avatar;
 
-  if (photoUrl) {
+  if (file) {
     if (env(CLOUDINARY.ENABLE_CLOUDINARY) === 'true') {
-      avatar = await saveFileToCloudinary(photoUrl);
+      avatar = await saveFileToCloudinary(file);
     } else {
-      avatar = await saveFileToUploadDir(photoUrl);
+      avatar = await saveFileToUploadDir(file);
     }
   }
 
   const result = await Services.users.updateUser(
-    { userId },
-    { ...body, photoUrl: avatar },
+    { _id: req.user.id },
+    {
+      gender,
+      name,
+      email,
+      weight,
+      timeInSports: activeTime,
+      dailyNorma: waterIntake,
+      photoUrl: avatar,
+    },
   );
 
   if (!result) {
-    return next(HttpError(404, `The contact with ${userId} was not found!`));
+    return next(
+      HttpError(404, `The contact with ${req.user._id} was not found!`),
+    );
   }
 
   res.json(
     ResponseMaker(
       200,
-      `Successfully updated a contact by id ${userId}}!`,
+      `Successfully updated a contact by id ${req.user._id}}!`,
       result,
     ),
   );

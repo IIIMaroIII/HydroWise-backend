@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import path from 'path';
 
 import { logger } from './utils/pino.js';
 import { env } from './utils/env.js';
@@ -27,7 +28,6 @@ export const setupServer = () => {
   //   'http://localhost:5173',
   // ];
 
-  app.use(logger());
   // app.use(
   //   cors({
   //     origin: '*',
@@ -77,6 +77,7 @@ export const setupServer = () => {
   );
   app.use(cookieParser());
   app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
   app.use('/v1/users/uploads', express.static(DIR.UPLOAD));
   app.use('/v1/api-docs', swaggerDocs());
   app.use(router);

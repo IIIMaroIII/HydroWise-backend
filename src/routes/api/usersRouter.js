@@ -3,10 +3,23 @@ import { validateBody } from '../../middlewares/validateBody.js';
 import { ctrlWrapper } from '../../utils/ctrlWrapper.js';
 import { Controllers } from '../../controllers/index.js';
 import { authenticate } from '../../middlewares/authenticate.js';
-import { upload } from '../../middlewares/upload.js';
 import { JoiSchemas } from '../../validation/index.js';
+import multer from 'multer';
+import { DIR } from '../../constants/constants.js';
 
 export const usersRouter = express.Router();
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, DIR.TEMP);
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, `${uniqueSuffix}_${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage });
 
 usersRouter.post(
   '/register',
@@ -29,10 +42,10 @@ usersRouter.post(
 );
 
 usersRouter.patch(
-  '/:userId',
+  '/update',
   upload.single('photoUrl'),
   authenticate,
-  validateBody(JoiSchemas.auth.updateUserSchema),
+  // validateBody(JoiSchemas.auth.updateUserSchema),
   ctrlWrapper(Controllers.users.UpdateController),
 );
 
