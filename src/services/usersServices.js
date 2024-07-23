@@ -44,13 +44,22 @@ const refreshUsersSession = async ({ sessionId, refreshToken }) => {
   if (isTokenExpired)
     throw HttpError(401, 'The refresh session token has expired!');
 
-  await Models.SessionModel.findOneAndDelete({
+  await Models.SessionModel.deleteMany({
     _id: sessionId,
     refreshToken,
   });
   const newSession = NewSession(session.userId);
 
   return await Models.SessionModel.create({ ...newSession });
+};
+
+const updateUser = async (_id, payload) => {
+  const user = await Models.UserModel.findOneAndUpdate(_id, payload, {
+    new: true,
+    select: '-createdAt -updatedAt',
+  });
+  console.log('user', user);
+  return user;
 };
 
 const logoutUser = async ({ sessionId, refreshToken }) => {
@@ -128,16 +137,6 @@ const loginOrSignupWithGoogle = async (code) => {
 
   return await Models.SessionModel.create(NewSession(user.id));
 };
-
-const updateUser = async ({ contactId, userId }, payload, options = {}) =>
-  await Models.ContactModel.findOneAndUpdate(
-    { _id: contactId, userId },
-    payload,
-    {
-      new: true,
-      ...options,
-    },
-  );
 
 export const users = {
   registerUser,
