@@ -17,16 +17,11 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { router } from './routes/api/index.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 import { resAccessOriginHeaders } from './utils/resAccessOrigin.js';
-import helmet from 'helmet';
 
 export const setupServer = () => {
   const app = express();
 
   app.use(logger());
-  // const allowedOrigins = [
-  //   'https://water-wise-frontend.vercel.app',
-  //   'http://localhost:5173',
-  // ];
 
   // app.use(
   //   cors({
@@ -34,47 +29,32 @@ export const setupServer = () => {
   //     credentials: true,
   //   }),
   // );
+
   // app.use(
   //   cors({
-  //     origin: function (origin, callback) {
-  //       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-  //         callback(null, true);
-  //       } else {
-  //         callback(new Error('Not allowed by CORS'));
-  //       }
-  //     },
+  //     origin: `${DEPLOY_FRONTEND}`,
   //     credentials: true,
   //   }),
   // );
 
   app.use(
     cors({
-      origin: `${DEPLOY_FRONTEND}`,
+      origin: function (origin, callback) {
+        if (!origin || ALLOWED_ORIGINS.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
       credentials: true,
     }),
   );
+
   app.use((req, res, next) => {
-    resAccessOriginHeaders(res);
+    resAccessOriginHeaders(req, res);
     next();
   });
-  app.use(helmet());
-  app.use(
-    helmet.contentSecurityPolicy({
-      directives: {
-        defaultSrc: ["'self'"],
-        imgSrc: ["'self'", 'data:', 'blob:', 'https://img.icons8.com'],
-        scriptSrc: ["'self'", "'unsafe-inline'"],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-        connectSrc: [
-          "'self'",
-          'https://img.icons8.com',
-          'https://water-wise-frontend.vercel.app',
-        ],
-        objectSrc: ["'self'"],
-      },
-    }),
-  );
+
   app.use(cookieParser());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
