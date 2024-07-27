@@ -6,8 +6,8 @@ export const DEPLOY_FRONTEND = 'https://water-wise-frontend.vercel.app';
 
 export const ALLOWED_ORIGINS = [
   'http://localhost:5173',
-  'https://water-wise-frontend.vercel.app',
-  'https://water-wise-frontend-git-main-iiimaroiiis-projects.vercel.app',
+  'https://hydro-wise-frontend-ii11m3let-iiimaroiiis-projects.vercel.app/',
+  'https://hydro-wise-frontend.vercel.app',
 ];
 
 export const ENV_VARS = {
