@@ -33,6 +33,8 @@ const LoginController = async (req, res, next) => {
 
 const RefreshController = async (req, res, next) => {
   const { sessionId, refreshToken } = req.cookies;
+  console.log('sessionId', sessionId);
+  console.log('refreshToken', refreshToken);
 
   if (!sessionId || !refreshToken) {
     return res.status(401).json({ message: 'Missing session cookies' });
@@ -42,7 +44,7 @@ const RefreshController = async (req, res, next) => {
     sessionId: req.cookies.sessionId,
     refreshToken: req.cookies.refreshToken,
   });
-  if (!session) return next(HttpError(500, 'Internal Server Error'));
+  if (!session) return next(HttpError(500, 'Internal Server Error', session));
 
   GenerateCookie(session, res);
 
