@@ -52,8 +52,8 @@ const getDailyWaterVolumeController = async (req, res, next) => {
     chosenDate,
   });
 
-  if (!data) {
-    return next(HttpError(404, `You do not have any daily volumes!`));
+  if (data.length === 0) {
+    return next(HttpError(200, `You do not have any daily volumes!`, data));
   }
 
   res.json(
