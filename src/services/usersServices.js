@@ -44,13 +44,16 @@ const refreshUsersSession = async ({ sessionId, refreshToken }) => {
   if (isTokenExpired)
     throw HttpError(401, 'The refresh session token has expired!');
 
-  await Models.SessionModel.deleteMany({
-    _id: sessionId,
-    refreshToken,
-  });
   const newSession = NewSession(session.userId);
 
-  return await Models.SessionModel.create({ ...newSession });
+  return await Models.SessionModel.findOneAndUpdate(
+    {
+      _id: sessionId,
+      refreshToken,
+    },
+    { ...newSession },
+    { new: true },
+  );
 };
 
 const updateUser = async (_id, payload) => {
