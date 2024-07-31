@@ -50,6 +50,8 @@ export const setupServer = () => {
     }),
   );
 
+  app.use(express.static(path.join(__dirname, 'public')));
+
   app.use((req, res, next) => {
     resAccessOriginHeaders(req, res);
     next();
