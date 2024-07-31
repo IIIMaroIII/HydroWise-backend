@@ -66,7 +66,6 @@ const updateUser = async (_id, payload) => {
 };
 
 const logoutUser = async ({ sessionId, refreshToken }) => {
-  if (!sessionId) throw HttpError(400, 'The session data was not provided!');
   await Models.SessionModel.deleteOne({ _id: sessionId, refreshToken });
 };
 const requestResetPassword = async (email) => {
