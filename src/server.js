@@ -1,17 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import path from 'path';
 
 import { logger } from './utils/pino.js';
 import { env } from './utils/env.js';
-import {
-  ALLOWED_ORIGINS,
-  DEPLOY_FRONTEND,
-  DIR,
-  ENV_VARS,
-  LOCALHOST,
-} from './constants/constants.js';
+import { ALLOWED_ORIGINS, DIR, ENV_VARS } from './constants/constants.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { router } from './routes/api/index.js';
@@ -45,7 +38,6 @@ export const setupServer = () => {
 
   app.use(cookieParser());
   app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
   app.use('/v1/users/uploads', express.static(DIR.UPLOAD));
   app.use('/v1/api-docs', swaggerDocs());
   app.use(router);
