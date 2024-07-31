@@ -1,8 +1,8 @@
 import path from 'node:path';
 
-export const SERVER_DOMAIN = 'https://waterwise-backend.onrender.com';
+export const SERVER_DOMAIN = 'https://hydrowise-backend.onrender.com';
 export const LOCALHOST = 'http://localhost:5173';
-export const DEPLOY_FRONTEND = 'https://water-wise-frontend.vercel.app';
+export const DEPLOY_FRONTEND = 'https://hydro-wise-frontend.vercel.app';
 
 export const ALLOWED_ORIGINS = [
   'http://localhost:5173',
