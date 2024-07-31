@@ -104,16 +104,17 @@ const UpdateController = async (req, res, next) => {
 };
 
 const LogoutController = async (req, res, next) => {
-  if (!req.cookies.sessionId || !req.cookies.refreshToken)
-    throw next(
-      HttpError(
-        401,
-        'The session was not found, probably you`ve been logged out previously.',
-      ),
-    );
+  const { sessionId, refreshToken } = req.cookies;
+  console.log('sessionId', sessionId);
+  console.log('refreshToken', refreshToken);
+
+  if (!sessionId || !refreshToken) {
+    return next(HttpError(401, 'Missing session cookies'));
+  }
+
   await Services.users.logoutUser({
-    sessionId: req.cookies.sessionId,
-    refreshToken: req.cookies.refreshToken,
+    sessionId: sessionId,
+    refreshToken: refreshToken,
   });
   res.clearCookie(COOKIE.SESSION_ID);
   res.clearCookie(COOKIE.REFRESH_TOKEN);
