@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-
+import path from 'node:path';
 import { logger } from './utils/pino.js';
 import { env } from './utils/env.js';
 import { ALLOWED_ORIGINS, DIR, ENV_VARS } from './constants/constants.js';
@@ -30,7 +30,6 @@ export const setupServer = () => {
   );
 
   app.use(express.static(path.join(__dirname, 'public')));
-
   app.use((req, res, next) => {
     resAccessOriginHeaders(req, res);
     next();
@@ -38,6 +37,7 @@ export const setupServer = () => {
 
   app.use(cookieParser());
   app.use(express.json());
+  app.use(express.static(path.join(__dirname, 'public')));
   app.use('/v1/users/uploads', express.static(DIR.UPLOAD));
   app.use('/v1/api-docs', swaggerDocs());
   app.use(router);
