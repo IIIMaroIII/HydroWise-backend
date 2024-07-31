@@ -37,7 +37,7 @@ const RefreshController = async (req, res, next) => {
   console.log('refreshToken', refreshToken);
 
   if (!sessionId || !refreshToken) {
-    return res.status(401).json({ message: 'Missing session cookies' });
+    return next(HttpError(401, 'Missing session cookies'));
   }
 
   const session = await Services.users.refreshUsersSession({
