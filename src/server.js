@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-
+import path from 'node:path';
 import { logger } from './utils/pino.js';
 import { env } from './utils/env.js';
 import { ALLOWED_ORIGINS, DIR, ENV_VARS } from './constants/constants.js';
