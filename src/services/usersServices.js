@@ -26,7 +26,7 @@ const loginUser = async (payload) => {
   if (!user) throw HttpError(404, 'User was not found!');
 
   const isPasswordEqual = await bcrypt.compare(payload.password, user.password);
-  if (!isPasswordEqual) throw HttpError(401, 'Unauthorized!');
+  if (!isPasswordEqual) throw HttpError(401, 'Email or password invalid!');
 
   await Models.SessionModel.deleteOne({ userId: user.id });
 

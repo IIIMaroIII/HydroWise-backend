@@ -33,8 +33,6 @@ const LoginController = async (req, res, next) => {
 
 const RefreshController = async (req, res, next) => {
   const { sessionId, refreshToken } = req.cookies;
-  console.log('sessionId', sessionId);
-  console.log('refreshToken', refreshToken);
 
   if (!sessionId || !refreshToken) {
     return next(HttpError(401, 'Missing session cookies'));
