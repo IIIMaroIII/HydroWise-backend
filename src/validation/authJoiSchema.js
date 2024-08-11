@@ -37,24 +37,39 @@ const loginUserSchema = joi.object({
 });
 
 const updateUserSchema = joi.object({
-  name: joi.string().min(2).max(32).allow('').trim(),
+  name: joi.string().min(2).max(32).allow('').trim().messages({
+    'string.base': 'Name should be a string',
+    'string.min': 'Name should have at least 2 characters',
+    'string.max': 'Name should have at most 32 characters',
+  }),
   gender: joi
     .string()
     .valid('woman', 'man')
-    .required('Gender is required')
+    .default('woman')
+    .required()
     .messages({
-      'any.required': 'Gender is required',
-      'string.valid': 'Invalid gender. Valid values are woman or man.',
+      'string.base': 'The gender must be a string',
+      'any.required': 'The gender is required',
     }),
-  waterIntake: joi
+  dailyNorma: joi
     .number()
-    .allow('')
     .positive('Value must be a positive number')
     .precision(1)
-    .default(1.8),
-  weight: joi.number().positive().required(),
-  // photoUrl: joi.string().trim(),
-  activeTime: joi.number().allow(''),
+    .default(1.8)
+    .required()
+    .messages({
+      'string.base': 'The daily norma must be a number',
+      'any.required': 'The daily norma is required',
+    }),
+  weight: joi.number().default(0).positive().required().messages({
+    'string.base': 'The weight must be a number',
+    'any.required': 'The weight is required',
+  }),
+  photoUrl: joi.string().trim(),
+  activeTime: joi.number().default(0).required().messages({
+    'string.base': 'The weight must be a number',
+    'any.required': 'The weight is required',
+  }),
   email: joi
     .string()
     .allow('')
@@ -62,11 +77,9 @@ const updateUserSchema = joi.object({
     .lowercase()
     .email()
     .pattern(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
-    .required()
     .messages({
-      'string.email':
-        'Please fill a valid email address in lowercase. Examples of valid email addresses: john.doe@example.com, john-doe@example.com, john@example.co.uk,john.doe@example.co.in',
-      'any.required': 'Email address is required',
+      'string.base': 'Email should be a string',
+      'string.email': 'Email is not valid',
     }),
 });
 
