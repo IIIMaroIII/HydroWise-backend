@@ -9,6 +9,11 @@ import { ENV_VARS, JWT, SMTP } from '../constants/constants.js';
 import { sendEmail } from '../utils/sendMail.js';
 import { googleOauth } from '../utils/googleOauth.js';
 
+const getAllUsers = async () => {
+  const users = await Models.UserModel.find();
+  return users.length;
+};
+
 const registerUser = async (payload) => {
   const user = await Models.UserModel.findOne({ email: payload.email });
   if (user) throw HttpError(409, 'Email has had already in use!');
@@ -61,7 +66,7 @@ const updateUser = async (_id, payload) => {
     new: true,
     select: '-createdAt -updatedAt',
   });
-  console.log('user', user);
+
   return user;
 };
 
@@ -149,4 +154,5 @@ export const users = {
   requestResetPassword,
   resetPwd,
   loginOrSignupWithGoogle,
+  getAllUsers,
 };

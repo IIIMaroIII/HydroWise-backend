@@ -4,22 +4,20 @@ import { ctrlWrapper } from '../../utils/ctrlWrapper.js';
 import { Controllers } from '../../controllers/index.js';
 import { authenticate } from '../../middlewares/authenticate.js';
 import { JoiSchemas } from '../../validation/index.js';
-import multer from 'multer';
-import { DIR } from '../../constants/constants.js';
+import { upload } from '../../middlewares/upload.js';
 
 export const usersRouter = express.Router();
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, DIR.TEMP);
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now();
-    cb(null, `${uniqueSuffix}_${file.originalname}`);
-  },
-});
+usersRouter.get(
+  '/amount',
+  ctrlWrapper(Controllers.users.getAllUsersController),
+);
 
-const upload = multer({ storage });
+usersRouter.get(
+  '/user-info',
+  authenticate,
+  ctrlWrapper(Controllers.users.getUserInfoController),
+);
 
 usersRouter.post(
   '/register',
@@ -45,7 +43,7 @@ usersRouter.patch(
   '/update',
   upload.single('photoUrl'),
   authenticate,
-  // validateBody(JoiSchemas.auth.updateUserSchema),
+  validateBody(JoiSchemas.auth.updateUserSchema),
   ctrlWrapper(Controllers.users.UpdateController),
 );
 

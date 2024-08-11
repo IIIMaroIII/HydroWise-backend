@@ -3,12 +3,43 @@ import { Services } from '../services/index.js';
 import { GenerateCookie } from '../utils/GenerateCookie.js';
 import { HttpError } from '../utils/HttpError.js';
 import { calculateDailyWaterIntake } from '../utils/calculateDailyWaterIntake.js';
-import { calculateDailyWaterIntakeForWomen } from '../utils/calculateDailyWaterIntakeForWomen.js';
 import { env } from '../utils/env.js';
 import { googleOauth } from '../utils/googleOauth.js';
 import { ResponseMaker } from '../utils/responseMaker.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+
+const getAllUsersController = async (req, res, next) => {
+  const amount = await Services.users.getAllUsers();
+
+  if (!amount)
+    return next(
+      HttpError(
+        500,
+        'Some error has occurred after retrieving a data from MongoDB',
+      ),
+    );
+
+  res.status(200).json({
+    status: 200,
+    message: `The number of users has been successfully found`,
+    data: { totalUsers: amount },
+  });
+};
+
+const getUserInfoController = async (req, res, next) => {
+  const user = req.user;
+
+  if (!user) return next(HttpError(401, 'Unauthorized'));
+
+  res.status(200).json({
+    status: 200,
+    message: 'User info was successfully found',
+    data: {
+      user: user,
+    },
+  });
+};
 
 const RegisterController = async (req, res, next) => {
   const user = await Services.users.registerUser(req.body);
@@ -55,16 +86,8 @@ const RefreshController = async (req, res, next) => {
 
 const UpdateController = async (req, res, next) => {
   const { file, body } = req;
-  const { gender, name, email, weight, activeTime } = body;
 
   let avatar;
-  let dailyNorma;
-
-  dailyNorma = calculateDailyWaterIntake(
-    gender,
-    Number(weight),
-    Number(activeTime),
-  );
 
   if (file) {
     if (env(CLOUDINARY.ENABLE_CLOUDINARY) === 'true') {
@@ -73,32 +96,24 @@ const UpdateController = async (req, res, next) => {
       avatar = await saveFileToUploadDir(file);
     }
   }
+
   const result = await Services.users.updateUser(
     { _id: req.user.id },
     {
-      gender,
-      name,
-      email,
-      weight,
-      timeInSports: activeTime,
-      dailyNorma,
+      ...body,
       photoUrl: avatar,
     },
   );
 
   if (!result) {
-    return next(
-      HttpError(404, `The contact with ${req.user._id} was not found!`),
-    );
+    return next(HttpError(404, `The user was not found!`));
   }
 
-  res.json(
-    ResponseMaker(
-      200,
-      `Successfully updated a contact by id ${req.user._id}}!`,
-      result,
-    ),
-  );
+  res.status(200).json({
+    status: 200,
+    message: `Successfully updated a user!`,
+    data: result,
+  });
 };
 
 const LogoutController = async (req, res, next) => {
@@ -166,4 +181,6 @@ export const users = {
   getGoogleAuthUrlController,
   loginWithGoogleController,
   UpdateController,
+  getUserInfoController,
+  getAllUsersController,
 };
