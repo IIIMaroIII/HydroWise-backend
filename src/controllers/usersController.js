@@ -35,9 +35,7 @@ const getUserInfoController = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     message: 'User info was successfully found',
-    data: {
-      user: user,
-    },
+    user,
   });
 };
 
