@@ -64,7 +64,7 @@ const refreshUsersSession = async ({ sessionId, refreshToken }) => {
 const updateUser = async (_id, payload) => {
   const user = await Models.UserModel.findOneAndUpdate(_id, payload, {
     new: true,
-    select: '-createdAt -updatedAt',
+    select: '-createdAt -updatedAt -_id',
   });
 
   return user;
@@ -126,7 +126,7 @@ const loginOrSignupWithGoogle = async (code) => {
   const loginTicket = await googleOauth.validateCode(code);
   const payload = loginTicket.getPayload();
 
-  if (!payload) throw HttpError(401, 'Unauthorized');
+  // if (!payload) throw HttpError(401, 'Unauthorized');
 
   let user = await Models.UserModel.findOne({ email: payload.email });
 
