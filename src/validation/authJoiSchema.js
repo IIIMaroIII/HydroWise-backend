@@ -55,18 +55,17 @@ const updateUserSchema = joi.object({
     .number()
     .positive('Value must be a positive number')
     .precision(1)
-    .default(1.8)
     .required()
     .messages({
       'string.base': 'The daily norma must be a number',
       'any.required': 'The daily norma is required',
     }),
-  weight: joi.number().default(0).positive().required().messages({
+  weight: joi.number().positive().required().messages({
     'string.base': 'The weight must be a number',
     'any.required': 'The weight is required',
   }),
   photoUrl: joi.string().trim(),
-  activeTime: joi.number().default(0).required().messages({
+  activeTime: joi.number().required().messages({
     'string.base': 'The weight must be a number',
     'any.required': 'The weight is required',
   }),
