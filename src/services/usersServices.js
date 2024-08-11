@@ -28,7 +28,13 @@ const registerUser = async (payload) => {
 
 const loginUser = async (payload) => {
   const user = await Models.UserModel.findOne({ email: payload.email });
-  if (!user) throw HttpError(404, 'User was not found!');
+
+  if (!user) {
+    throw HttpError(
+      404,
+      'User was not found. Sign up or type down the correct email!',
+    );
+  }
 
   const isPasswordEqual = await bcrypt.compare(payload.password, user.password);
   if (!isPasswordEqual) throw HttpError(401, 'Email or password invalid!');
